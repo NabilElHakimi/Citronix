@@ -1,13 +1,16 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: 1230
-    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
 
   liquibase:
-    change-log: db/changelog/master.yml
-    enabled: true
+    change-log: ${SPRING_LIQUIBASE_CHANGELOG}
+    enabled: ${SPRING_LIQUIBASE_ENABLED}
 
 server:
-  port: 8083
+  port: ${SERVER_PORT}
