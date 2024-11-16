@@ -4,7 +4,10 @@ package me.elhakimi.citronix.rest.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Farm;
+import me.elhakimi.citronix.rest.exception.mustBeNotNullException;
+import me.elhakimi.citronix.rest.exception.mustBeNullException;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
+import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,20 +25,33 @@ public class FarmController {
 
     @PostMapping
     public ResponseEntity<Object> saveFarm(@RequestBody @Valid Farm farm) {
+
+        if(farm.getId() != null) throw new mustBeNullException("Id");
+        if (!farm.getFields().isEmpty()) throw new mustBeNullException("Fields");
+
         return ResponseEntity.ok(farmService.save(farm));
+
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateFarm() {
-        return ResponseEntity.ok(farmService.update(null));
+    public ResponseEntity<Object> updateFarm(@RequestBody @Valid Farm farm) {
+
+        if(farm.getId() != null) throw new mustBeNotNullException("Id");
+        if (!farm.getFields().isEmpty()) throw new mustBeNullException("Fields");
+
+        return ResponseEntity.ok(farmService.update(farm));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Object> deleteFarm(@RequestParam Long id) {
-        farmService.delete(id);
-        return ResponseEntity.ok("{message: Farm deleted}");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteFarm(@PathVariable Long id) {
+
+        if(farmService.getFarm(id) != null) {
+            farmService.delete(id);
+            return ResponseUtil.deleteSuccessfully("Farm");
+        }
+
+        return ResponseUtil.notFound("Farm");
+
     }
-
-
 
 }
