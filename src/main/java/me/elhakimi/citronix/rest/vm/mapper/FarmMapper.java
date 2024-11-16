@@ -13,5 +13,4 @@ public interface FarmMapper {
 
     @Mapping(source = "id", target = "id")
     Farm toFarm(FarmVm farmVm);
-
 }
