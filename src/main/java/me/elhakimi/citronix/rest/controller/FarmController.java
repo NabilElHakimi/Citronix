@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.rest.exception.mustBeNotNullException;
 import me.elhakimi.citronix.rest.exception.mustBeNullException;
+import me.elhakimi.citronix.rest.vm.FarmVm;
+import me.elhakimi.citronix.rest.vm.mapper.FarmMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class FarmController {
 
     private final FarmServiceImpl farmService;
+    private final FarmMapper FarmMapper;
+    private final FarmMapper farmMapper;
 
     @GetMapping
     public ResponseEntity<Object> getFarm() {
@@ -28,18 +32,19 @@ public class FarmController {
 
         if(farm.getId() != null) throw new mustBeNullException("Id");
         if (!farm.getFields().isEmpty()) throw new mustBeNullException("Fields");
-
         return ResponseEntity.ok(farmService.save(farm));
 
     }
 
     @PutMapping
     public ResponseEntity<Object> updateFarm(@RequestBody @Valid Farm farm) {
+        if (farm.getId() == null) throw new mustBeNotNullException("Id");
 
-        if(farm.getId() != null) throw new mustBeNotNullException("Id");
-        if (!farm.getFields().isEmpty()) throw new mustBeNullException("Fields");
+        if (farmService.getFarm(farm.getId()) != null) {
+            return ResponseEntity.ok(farmMapper.toFarmVm(farmService.update(farm)));
+        }
 
-        return ResponseEntity.ok(farmService.update(farm));
+        return ResponseUtil.notFound("Farm");
     }
 
     @DeleteMapping("/{id}")

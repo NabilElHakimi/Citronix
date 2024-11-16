@@ -34,11 +34,8 @@ public class FarmServiceImpl {
 
 
     public Farm update(Farm farm) {
+        if(farm.getId() == null) throw new mustBeNullException("Id");
         return farmRepository.save(farm);
     }
-
-
-
-
 
 }
