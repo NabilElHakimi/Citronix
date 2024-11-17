@@ -10,6 +10,7 @@ import me.elhakimi.citronix.rest.vm.FarmVm;
 import me.elhakimi.citronix.rest.vm.mapper.FarmMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,11 +67,13 @@ public class FarmController {
     public ResponseEntity<Object> searchFarm(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Double area,
-            @RequestParam(required = false) LocalDate creationDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate creationDate,
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String location
     ) {
-        return ResponseEntity.ok(farmService.searchAll(name, area, creationDate, id, location));
+        return ResponseEntity.ok(farmService.searchAll(name, area, location, creationDate, id));
     }
 
-    }
+
+
+}

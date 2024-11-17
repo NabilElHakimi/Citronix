@@ -41,8 +41,9 @@ public class FarmServiceImpl {
 
 //   ---------------------- ------- ---- searchAllByNameOrAreaOrCreationDateOrId ------------------------------------------------------
 
-    public List<Farm> searchAll(String name, Double area, LocalDate creationDate, Long id , String location) {
-        return farmRepository.searchAllByNameOrAreaOrCreationDateOrIdOrLocation(name, area, creationDate, id ,location) ;
+    public List<Farm> searchAll(String name, Double area, String location, LocalDate creationDate, Long id) {
+        return farmRepository.searchAllByCriteria(name, area, creationDate, id, location);
     }
+
 
 }

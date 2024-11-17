@@ -18,13 +18,11 @@ public interface FarmRepository extends JpaRepository<Farm, Long> {
             "AND (:creationDate IS NULL OR f.creationDate = :creationDate) " +
             "AND (:id IS NULL OR f.id = :id) " +
             "AND (:location IS NULL OR f.location LIKE %:location%)")
-    List<Farm> searchAllByNameOrAreaOrCreationDateOrIdOrLocation(
+    List<Farm> searchAllByCriteria(
             @Param("name") String name,
             @Param("area") Double area,
             @Param("creationDate") LocalDate creationDate,
             @Param("id") Long id,
-            @Param("location") String location
-    );
-
+            @Param("location") String location);
 
 }
