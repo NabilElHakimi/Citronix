@@ -6,14 +6,12 @@ import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.rest.exception.mustBeNotNullException;
 import me.elhakimi.citronix.rest.exception.mustBeNullException;
-import me.elhakimi.citronix.rest.vm.FarmVm;
 import me.elhakimi.citronix.rest.vm.mapper.FarmMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 
 @RestController
