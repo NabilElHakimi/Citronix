@@ -2,11 +2,17 @@ package me.elhakimi.citronix.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Tree {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,13 +3,19 @@ package me.elhakimi.citronix.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.*;
 import me.elhakimi.citronix.domain.enums.Season;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-    @Entity
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
     public class Harvest {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
