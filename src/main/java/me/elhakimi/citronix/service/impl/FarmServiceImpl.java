@@ -7,6 +7,7 @@ import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.rest.exception.mustBeNullException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -36,6 +37,12 @@ public class FarmServiceImpl {
     public Farm update(Farm farm) {
         if(farm.getId() == null) throw new mustBeNullException("Id");
         return farmRepository.save(farm);
+    }
+
+//   ---------------------- ------- ---- searchAllByNameOrAreaOrCreationDateOrId ------------------------------------------------------
+
+    public List<Farm> searchAll(String name, Double area, LocalDate creationDate, Long id , String location) {
+        return farmRepository.searchAllByNameOrAreaOrCreationDateOrIdOrLocation(name, area, creationDate, id ,location) ;
     }
 
 }

@@ -13,6 +13,8 @@ import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/api/farm")
 @AllArgsConstructor
@@ -59,4 +61,16 @@ public class FarmController {
 
     }
 
-}
+
+    @GetMapping("/search")
+    public ResponseEntity<Object> searchFarm(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Double area,
+            @RequestParam(required = false) LocalDate creationDate,
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String location
+    ) {
+        return ResponseEntity.ok(farmService.searchAll(name, area, creationDate, id, location));
+    }
+
+    }
