@@ -10,32 +10,33 @@ import java.util.Map;
 public class ResponseUtil {
 
     public static ResponseEntity<Object> deleteSuccessfully(String name) {
-        return createResponse(name + " deleted successfully.", HttpStatus.OK);
+        return createResponse(name + " deleted successfully.", HttpStatus.OK, null);
     }
 
-    public static ResponseEntity<Object> updateSuccessfully(String name) {
-        return createResponse(name + " updated successfully.", HttpStatus.OK);
+    public static ResponseEntity<Object> updateSuccessfully(String name, Object updatedObject) {
+        return createResponse(name + " updated successfully.", HttpStatus.OK, updatedObject);
     }
 
-    public static ResponseEntity<Object> saveSuccessfully(String name) {
-        return createResponse(name + " saved successfully.", HttpStatus.CREATED);
+    public static ResponseEntity<Object> saveSuccessfully(String name, Object savedObject) {
+        return createResponse(name + " saved successfully.", HttpStatus.CREATED, savedObject);
     }
 
     public static ResponseEntity<Object> saveFailed(String name) {
-        return createResponse(name + " failed to save.", HttpStatus.BAD_REQUEST);
+        return createResponse(name + " failed to save.", HttpStatus.BAD_REQUEST, null);
     }
 
     public static ResponseEntity<Object> notFound(String name) {
-        return createResponse(name + " not found.", HttpStatus.NOT_FOUND);
+        return createResponse(name + " not found.", HttpStatus.NOT_FOUND, null);
     }
 
-    private static ResponseEntity<Object> createResponse(String message, HttpStatus status) {
+    private static ResponseEntity<Object> createResponse(String message, HttpStatus status, Object data) {
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDateTime.now());
         response.put("status", status.value());
         response.put("message", message);
+        if (data != null) {
+            response.put("data", data);
+        }
         return new ResponseEntity<>(response, status);
     }
-
-
 }
