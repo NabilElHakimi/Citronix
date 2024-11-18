@@ -1,16 +1,13 @@
-package me.elhakimi.citronix.rest.vm;
-
-import jakarta.validation.constraints.NotBlank;
+package me.elhakimi.citronix.domain.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import me.elhakimi.citronix.domain.Field;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-public class TreeVm {
+public class TreeDTO {
 
     @NotNull
     private LocalDate plantingDate ;

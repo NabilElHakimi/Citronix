@@ -1,7 +1,7 @@
-package me.elhakimi.citronix.rest.vm.mapper;
+package me.elhakimi.citronix.domain.dto.mapper;
 
 import me.elhakimi.citronix.domain.Tree;
-import me.elhakimi.citronix.rest.vm.TreeVm;
+import me.elhakimi.citronix.domain.dto.TreeDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -9,8 +9,8 @@ import org.mapstruct.Mapping;
 public interface TreeMapper {
 
     @Mapping(target = "field.id", source = "filedId")
-    Tree toEntity(TreeVm treeVm);
+    Tree toEntity(TreeDTO treeDTO);
 
     @Mapping(target = "filedId", source = "field.id")
-    TreeVm toVm(Tree tree);
+    TreeDTO toVm(Tree tree);
 }

@@ -5,7 +5,7 @@ package me.elhakimi.citronix.rest.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Tree;
-import me.elhakimi.citronix.rest.vm.TreeVm;
+import me.elhakimi.citronix.domain.dto.TreeDTO;
 import me.elhakimi.citronix.service.impl.TreeServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class TreeController {
     private final TreeServiceImpl treeService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@Valid @RequestBody TreeVm tree) {
+    public ResponseEntity<Object> save(@Valid @RequestBody TreeDTO tree) {
         Tree savedTree = treeService.save(tree);
         if (savedTree != null) {
             return ResponseUtil.saveSuccessfully("Tree", tree);

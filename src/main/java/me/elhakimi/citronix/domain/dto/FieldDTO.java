@@ -1,11 +1,11 @@
-package me.elhakimi.citronix.rest.vm;
+package me.elhakimi.citronix.domain.dto;
 import lombok.Getter;
 import lombok.Setter;
 import me.elhakimi.citronix.domain.Farm;
 
 @Getter
 @Setter
-public class FieldVm {
+public class FieldDTO {
 
         private Long id;
         private double area;

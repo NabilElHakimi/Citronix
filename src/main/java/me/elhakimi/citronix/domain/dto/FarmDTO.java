@@ -1,14 +1,11 @@
-package me.elhakimi.citronix.rest.vm;
+package me.elhakimi.citronix.domain.dto;
 
-import jakarta.persistence.Id;
 import lombok.*;
-
 import java.time.LocalDate;
-
 
 @Getter
 @Setter
-public class FarmVm {
+public class FarmDTO {
 
         private Long id;
         private String name;
@@ -17,3 +14,4 @@ public class FarmVm {
         private LocalDate creationDate;
 
 }
+

@@ -1,7 +1,7 @@
-package me.elhakimi.citronix.rest.vm.mapper;
+package me.elhakimi.citronix.domain.dto.mapper;
 
 import me.elhakimi.citronix.domain.Farm;
-import me.elhakimi.citronix.rest.vm.FarmVm;
+import me.elhakimi.citronix.domain.dto.FarmDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -9,8 +9,8 @@ import org.mapstruct.Mapping;
 public interface FarmMapper {
 
     @Mapping(source = "id", target = "id")
-    FarmVm toFarmVm(Farm farm);
+    FarmDTO toFarmVm(Farm farm);
 
     @Mapping(source = "id", target = "id")
-    Farm toFarm(FarmVm farmVm);
+    Farm toFarm(FarmDTO farmDTO);
 }
