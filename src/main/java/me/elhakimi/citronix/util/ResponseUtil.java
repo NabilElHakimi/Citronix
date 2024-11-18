@@ -21,6 +21,10 @@ public class ResponseUtil {
         return createResponse(name + " saved successfully.", HttpStatus.CREATED);
     }
 
+    public static ResponseEntity<Object> saveFailed(String name) {
+        return createResponse(name + " failed to save.", HttpStatus.BAD_REQUEST);
+    }
+
     public static ResponseEntity<Object> notFound(String name) {
         return createResponse(name + " not found.", HttpStatus.NOT_FOUND);
     }

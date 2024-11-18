@@ -33,7 +33,6 @@ public class FarmServiceImpl {
         farmRepository.deleteById(id);
     }
 
-
     public Farm update(Farm farm) {
         if(farm.getId() == null) throw new mustBeNullException("Id");
         return farmRepository.save(farm);

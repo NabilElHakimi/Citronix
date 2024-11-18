@@ -30,4 +30,10 @@ public class ExceptionsHandlers extends RuntimeException {
         return new ResponseEntity<>(errorMessages, HttpStatus.BAD_REQUEST);
     }
 
+
+    @ExceptionHandler(DontHaveAreaException.class)
+    public ResponseEntity<String> handleDontHaveAreaException(DontHaveAreaException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 }
