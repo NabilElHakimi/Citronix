@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
-import me.elhakimi.citronix.domain.dto.mapper.FarmMapper;
+import me.elhakimi.citronix.domain.dto.mapper.FarmDtoMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,8 +20,8 @@ import java.time.LocalDate;
 public class FarmController {
 
     private final FarmServiceImpl farmService;
-    private final FarmMapper FarmMapper;
-    private final FarmMapper farmMapper;
+    private final FarmDtoMapper FarmDtoMapper;
+    private final FarmDtoMapper farmDtoMapper;
 
     @GetMapping
     public ResponseEntity<Object> getFarm() {
@@ -42,7 +42,7 @@ public class FarmController {
         if (farm.getId() == null) throw new mustBeNotNullException("Id");
 
         if (farmService.getFarm(farm.getId()) != null) {
-            return ResponseEntity.ok(farmMapper.toFarmVm(farmService.update(farm)));
+            return ResponseEntity.ok(farmDtoMapper.toFarmVm(farmService.update(farm)));
         }
 
         return ResponseUtil.notFound("Farm");

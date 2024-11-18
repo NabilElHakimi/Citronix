@@ -1,16 +1,16 @@
 package me.elhakimi.citronix.domain.dto.mapper;
 
-import me.elhakimi.citronix.domain.Farm;
-import me.elhakimi.citronix.domain.dto.FarmDTO;
+import me.elhakimi.citronix.domain.Field;
+import me.elhakimi.citronix.domain.dto.FieldDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface FarmMapper {
+public interface FieldDtoMapper {
 
     @Mapping(source = "id", target = "id")
-    FarmDTO toFarmVm(Farm farm);
+    FieldDTO toFarmVm(Field field);
 
     @Mapping(source = "id", target = "id")
-    Farm toFarm(FarmDTO farmDTO);
+    Field toFarm(FieldDTO fieldDTO);
 }

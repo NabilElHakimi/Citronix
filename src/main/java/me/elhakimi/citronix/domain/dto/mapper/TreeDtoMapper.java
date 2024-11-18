@@ -6,11 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface TreeMapper {
+public interface TreeDtoMapper {
 
-    @Mapping(target = "field.id", source = "filedId")
     Tree toEntity(TreeDTO treeDTO);
 
-    @Mapping(target = "filedId", source = "field.id")
     TreeDTO toVm(Tree tree);
 }
