@@ -4,7 +4,7 @@ package me.elhakimi.citronix.service.impl;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.Repository.FarmRepository;
 import me.elhakimi.citronix.domain.Farm;
-import me.elhakimi.citronix.rest.exception.mustBeNullException;
+import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
