@@ -13,6 +13,10 @@ public class ResponseUtil {
         return createResponse(name + " deleted successfully.", HttpStatus.OK);
     }
 
+    public static ResponseEntity<Object> saveFailed(String name) {
+        return createResponse(name + " failed to save.", HttpStatus.BAD_REQUEST);
+    }
+
     public static ResponseEntity<Object> updateSuccessfully(String name) {
         return createResponse(name + " updated successfully.", HttpStatus.OK);
     }
