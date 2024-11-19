@@ -7,6 +7,7 @@ import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import me.elhakimi.citronix.domain.dto.mapper.FarmDtoMapper;
+import me.elhakimi.citronix.rest.vm.mapper.FarmVmMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,8 +21,9 @@ import java.time.LocalDate;
 public class FarmController {
 
     private final FarmServiceImpl farmService;
-    private final FarmDtoMapper FarmDtoMapper;
     private final FarmDtoMapper farmDtoMapper;
+    private final FarmVmMapper farmVmMapper;
+
 
     @GetMapping
     public ResponseEntity<Object> getFarm() {
@@ -32,8 +34,8 @@ public class FarmController {
     public ResponseEntity<Object> saveFarm(@RequestBody @Valid Farm farm) {
 
         if(farm.getId() != null) throw new mustBeNullException("Id");
-        if (!farm.getFields().isEmpty()) throw new mustBeNullException("Fields");
-        return ResponseEntity.ok(farmService.save(farm));
+//        if (!farm.getFields().isEmpty()) throw new mustBeNullException("Fields");
+        return ResponseEntity.ok(farmVmMapper.toFarmVm(farmService.save(farm)));
 
     }
 
@@ -60,7 +62,6 @@ public class FarmController {
 
     }
 
-
     @GetMapping("/search")
     public ResponseEntity<Object> searchFarm(
             @RequestParam(required = false) String name,
@@ -71,7 +72,5 @@ public class FarmController {
     ) {
         return ResponseEntity.ok(farmService.searchAll(name, area, location, creationDate, id));
     }
-
-
 
 }

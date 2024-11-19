@@ -22,6 +22,10 @@ public class FarmServiceImpl {
     }
 
     public Farm save(Farm farm) {
+        if(farm.getFields() !=null){
+            farm.getFields().forEach(field -> field.setFarm(farm));
+        }
+
         return farmRepository.save(farm);
     }
 
