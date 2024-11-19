@@ -16,7 +16,8 @@ public class HarvestDetailDTO {
     @PositiveOrZero
     private double quantity;
 
-    @ManyToOne
     private Harvest harvest;
+
+    private Tree tree;
 
 }

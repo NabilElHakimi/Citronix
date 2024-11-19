@@ -15,6 +15,6 @@ public class HarvestDetailVm {
 
 //    private Harvest harvest;
 
-    private TreeVm tree;
+//    private TreeVm tree;
 
 }
