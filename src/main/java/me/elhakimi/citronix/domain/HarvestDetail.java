@@ -25,4 +25,5 @@ public class HarvestDetail {
     @ManyToOne
     @JoinColumn(name = "tree_id")
     private Tree tree;
+
 }
