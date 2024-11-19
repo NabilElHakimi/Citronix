@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @Setter
 public class TreeDTO {
 
+    private Long id;
+
     @NotNull
     private LocalDate plantingDate ;
 

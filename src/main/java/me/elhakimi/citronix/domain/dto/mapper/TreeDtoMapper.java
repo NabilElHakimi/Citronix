@@ -8,7 +8,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface TreeDtoMapper {
 
+    @Mapping(source = "id", target = "id")
     Tree toEntity(TreeDTO treeDTO);
 
+    @Mapping(source = "id", target = "id")
     TreeDTO toVm(Tree tree);
 }

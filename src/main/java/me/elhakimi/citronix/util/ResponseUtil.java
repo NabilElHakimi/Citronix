@@ -29,6 +29,10 @@ public class ResponseUtil {
         return createResponse(name + " not found.", HttpStatus.NOT_FOUND, null);
     }
 
+    public static ResponseEntity<Object> getSuccessfully(String name, Object object) {
+        return createResponse(name + " retrieved successfully.", HttpStatus.OK, object);
+    }
+
     private static ResponseEntity<Object> createResponse(String message, HttpStatus status, Object data) {
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDateTime.now());

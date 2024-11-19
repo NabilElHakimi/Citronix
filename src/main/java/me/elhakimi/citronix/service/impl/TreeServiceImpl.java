@@ -32,8 +32,17 @@ public class TreeServiceImpl {
 
     public Tree update(TreeDTO tree) {
 
+        if(tree.getId() == null) {
+            throw new NotFoundException("Tree");
+        }
+
+        if(!treeRepository.existsById(tree.getId())) {
+            throw new NotFoundException("Tree");
+        }
+
         Field field = fieldService.getField(tree.getFiledId())
                 .orElseThrow(() -> new NotFoundException("Field") );
+
         Tree treeToSave = treeDtoMapper.toEntity(tree);
         treeToSave.setField(field);
         return treeRepository.save(treeToSave);
@@ -45,11 +54,19 @@ public class TreeServiceImpl {
     }
 
 
-
     public void delete(Long id) {
+
+        if(id == null) throw new NotFoundException("Tree");
+        if (id == 0) throw new NotFoundException("Tree");
+        if(!treeRepository.existsById(id)) throw new NotFoundException("Tree");
+
         treeRepository.deleteById(id);
     }
 
+    public Tree getTree(Long id) {
+        return treeRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Tree"));
+    }
 
 
 
