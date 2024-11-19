@@ -11,8 +11,8 @@ import org.mapstruct.Mapping;
 public interface HarvestDtoMapper {
 
     @Mapping(source = "id", target = "id")
-    HarvestDTO toHarvestVm(Harvest harvest);
+    HarvestDTO toHarvestDto(Harvest harvest);
 
     @Mapping(source = "id", target = "id")
-    Harvest toFarm(HarvestDTO harvestDTO);
+    Harvest toHarvest(HarvestDTO harvestDTO);
 }
