@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.Repository.FieldRepository;
 import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.domain.Field;
-import me.elhakimi.citronix.rest.exception.DontHaveAreaException;
+import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -14,7 +16,6 @@ public class FieldServiceImpl {
 
     private final FieldRepository fieldRepository;
     private final FarmServiceImpl farmService ;
-
 
     public Field saveField(Field field , Long id) {
         Farm farm = farmService.getFarm(id);
@@ -27,6 +28,11 @@ public class FieldServiceImpl {
             return fieldRepository.save(field);
         }
         return null ;
+    }
+
+
+    public Optional<Field> getField(Long fieldId) {
+        return fieldRepository.findById(fieldId);
     }
 
 }

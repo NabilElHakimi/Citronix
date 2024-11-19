@@ -4,7 +4,9 @@ package me.elhakimi.citronix.service.impl;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.Repository.FarmRepository;
 import me.elhakimi.citronix.domain.Farm;
-import me.elhakimi.citronix.rest.exception.mustBeNullException;
+import me.elhakimi.citronix.domain.Field;
+import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
+import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,6 +24,11 @@ public class FarmServiceImpl {
     }
 
     public Farm save(Farm farm) {
+
+        double areaSum = farm.getFields().stream().mapToDouble(Field::getArea).sum();
+        if(areaSum > farm.getArea()) throw new DontHaveAreaException();
+        farm.getFields().forEach(field -> field.setFarm(farm));
+
         return farmRepository.save(farm);
     }
 

@@ -36,4 +36,5 @@ public class Sale {
     public double getRevenue() {
         return quantity * unitPrice;
     }
+
 }
