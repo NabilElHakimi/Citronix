@@ -8,6 +8,9 @@ import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.domain.dto.mapper.TreeDtoMapper;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import me.elhakimi.citronix.domain.dto.TreeDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,10 +52,13 @@ public class TreeServiceImpl {
 
     }
 
-    public List<Tree> findAll() {
-        return treeRepository.findAll();
-    }
+    public Page<Tree> findAll(int page, int size) {
 
+        page = page < 1 ? 0 : page - 1;
+
+        Pageable pageable = PageRequest.of(page, size);
+        return treeRepository.findAll(pageable);
+    }
 
     public void delete(Long id) {
 
@@ -67,7 +73,5 @@ public class TreeServiceImpl {
         return treeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Tree"));
     }
-
-
 
 }

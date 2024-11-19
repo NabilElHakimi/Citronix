@@ -6,11 +6,15 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.domain.dto.TreeDTO;
+import me.elhakimi.citronix.rest.vm.TreeVm;
 import me.elhakimi.citronix.rest.vm.mapper.TreeVmMapper;
 import me.elhakimi.citronix.service.impl.TreeServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tree")
@@ -56,7 +60,19 @@ public class TreeController {
         return ResponseUtil.deleteSuccessfully("Tree");
     }
 
-}
 
+    @GetMapping
+    public ResponseEntity<Object> findAll(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<Tree> treePage = treeService.findAll(page, size);
+        List<TreeVm> trees = treePage.map(treeVmMapper::toTreeVm).getContent();
+
+        return ResponseUtil.getSuccessfully("Trees", trees);
+    }
+
+
+}
 
 
