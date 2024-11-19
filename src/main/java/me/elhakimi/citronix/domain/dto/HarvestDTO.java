@@ -1,24 +1,20 @@
-package me.elhakimi.citronix.domain;
+package me.elhakimi.citronix.domain.dto;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
+import me.elhakimi.citronix.domain.HarvestDetail;
 import me.elhakimi.citronix.domain.enums.Season;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-    public class Harvest {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class HarvestDTO {
+
         private Long id;
 
         @NotNull
@@ -30,7 +26,6 @@ import java.util.List;
         @PositiveOrZero
         private double totalQuantity;
 
-        @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL)
         private List<HarvestDetail> details = new ArrayList<>();
 
     }
