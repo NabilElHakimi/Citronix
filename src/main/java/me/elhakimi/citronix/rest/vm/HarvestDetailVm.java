@@ -13,6 +13,7 @@ public class HarvestDetailVm {
 
     private double quantity;
 
+
 //    private Harvest harvest;
 
 //    private TreeVm tree;
