@@ -20,7 +20,7 @@ public class FieldController {
     @PostMapping
     public ResponseEntity<Object> saveField(@Valid  @RequestBody Field field , @RequestParam Long id) {
         if(fieldService.saveField(field , id) != null) {
-            return ResponseUtil.saveSuccessfully("Field");
+            return ResponseUtil.saveSuccessfully("Field" , field);
         } else {
             return ResponseUtil.saveFailed("Field");
         }

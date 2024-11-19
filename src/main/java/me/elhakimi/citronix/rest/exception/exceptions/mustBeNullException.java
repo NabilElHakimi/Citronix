@@ -1,4 +1,4 @@
-package me.elhakimi.citronix.rest.exception;
+package me.elhakimi.citronix.rest.exception.exceptions;
 
 public class mustBeNullException extends RuntimeException {
     public mustBeNullException(String fieldName) {
