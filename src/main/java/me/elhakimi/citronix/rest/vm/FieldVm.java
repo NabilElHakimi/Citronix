@@ -10,8 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 public class FieldVm {
+
     private Long id;
     private String name;
     private double area;
     private List<TreeVm> trees = new ArrayList<>();
+
 }

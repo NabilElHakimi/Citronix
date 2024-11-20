@@ -6,7 +6,9 @@ import me.elhakimi.citronix.rest.vm.FarmVm;
 import me.elhakimi.citronix.rest.vm.FieldVm;
 import org.mapstruct.Mapper;
 
+
 @Mapper(componentModel = "spring")
+
 public interface FieldVmMapper {
 
     Field toField(FieldVm fieldVm);
