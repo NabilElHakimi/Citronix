@@ -13,5 +13,29 @@ import java.util.List;
 @AllArgsConstructor
 public class HarvestServiceImpl {
 
+    private final HarvestRepository harvestRepository;
+
+    public Harvest save(Harvest harvest) {
+        return harvestRepository.save(harvest);
+    }
+
+    public List<Harvest> findAll(Pageable pageable) {
+        return harvestRepository.findAll(pageable).getContent();
+    }
+
+    public Harvest findById(Long id) {
+        return harvestRepository.findById(id).orElse(null);
+    }
+
+    public void delete(Long id) {
+        harvestRepository.deleteById(id);
+    }
+
+    public Harvest update(Harvest harvest) {
+        return harvestRepository.save(harvest);
+    }
+
+
+
     }
 
