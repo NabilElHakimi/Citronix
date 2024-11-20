@@ -5,7 +5,6 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
-import me.elhakimi.citronix.domain.dto.mapper.FarmDtoMapper;
 import me.elhakimi.citronix.rest.vm.FarmVm;
 import me.elhakimi.citronix.rest.vm.mapper.FarmVmMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
