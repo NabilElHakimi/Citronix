@@ -7,6 +7,7 @@ import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import me.elhakimi.citronix.domain.dto.mapper.FarmDtoMapper;
+import me.elhakimi.citronix.rest.vm.FarmVm;
 import me.elhakimi.citronix.rest.vm.mapper.FarmVmMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
@@ -24,19 +25,17 @@ public class FarmController {
     private final FarmDtoMapper farmDtoMapper;
     private final FarmVmMapper farmVmMapper;
 
-
     @GetMapping
     public ResponseEntity<Object> getFarm() {
         return ResponseEntity.ok(farmService.getFarms());
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveFarm(@RequestBody @Valid Farm farm) {
+    public ResponseEntity<Object> saveFarm(@RequestBody @Valid FarmVm farmVm) {
 
-        if(farm.getId() != null) throw new mustBeNullException("Id");
-//        if (!farm.getFields().isEmpty()) throw new mustBeNullException("Fields");
-        return ResponseEntity.ok(farmVmMapper.toFarmVm(farmService.save(farm)));
-
+        if(farmVm.getId() != null) throw new mustBeNullException("Id");
+//        if (!farmVm.getFields().isEmpty()) throw new mustBeNullException("Fields");
+        return ResponseEntity.ok(farmVmMapper.toFarmVm(farmService.save(farmVmMapper.toFarm(farmVm))));
     }
 
     @PutMapping
