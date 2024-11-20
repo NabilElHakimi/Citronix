@@ -23,6 +23,10 @@ public class FieldController {
     @PostMapping
     public ResponseEntity<Object> saveField(@Valid @RequestBody FieldVm fieldVm, @RequestParam Long id) {
 
+        if(fieldVm.getId() != null) return ResponseUtil.saveFailed("Field");
+        if(fieldVm.getArea() < 0.1) return ResponseUtil.saveFailed("Field: Area");
+        if(id == null || id <= 0 )  return ResponseUtil.saveFailed("Field: Farm");
+
         Field savedField = fieldService.saveField(fieldVmMapper.toField(fieldVm), id);
 
         return savedField != null

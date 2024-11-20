@@ -21,7 +21,6 @@ import java.time.LocalDate;
 public class FarmController {
 
     private final FarmServiceImpl farmService;
-    private final FarmDtoMapper farmDtoMapper;
     private final FarmVmMapper farmVmMapper;
 
     @GetMapping
@@ -42,7 +41,7 @@ public class FarmController {
         if (farmVm.getId() == null) throw new mustBeNotNullException("Id");
 
         if (farmService.getFarm(farmVm.getId()) != null) {
-            return ResponseEntity.ok(farmDtoMapper.toFarmVm(farmService.update(farmVmMapper.toFarm(farmVm))));
+            return ResponseEntity.ok(farmVmMapper.toFarmVm(farmService.update(farmVmMapper.toFarm(farmVm))));
         }
 
         return ResponseUtil.notFound("Farm");
