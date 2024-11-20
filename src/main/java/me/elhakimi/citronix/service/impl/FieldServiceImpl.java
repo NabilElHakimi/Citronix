@@ -34,4 +34,14 @@ public class FieldServiceImpl {
         return fieldRepository.findById(fieldId);
     }
 
+
+    public Field updateField(Field field) {
+        return fieldRepository.save(field);
+    }
+
+    public void deleteField(Long fieldId) {
+        fieldRepository.deleteById(fieldId);
+    }
+
+
 }
