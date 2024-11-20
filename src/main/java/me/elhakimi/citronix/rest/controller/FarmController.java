@@ -39,11 +39,11 @@ public class FarmController {
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateFarm(@RequestBody @Valid Farm farm) {
-        if (farm.getId() == null) throw new mustBeNotNullException("Id");
+    public ResponseEntity<Object> updateFarm(@RequestBody @Valid FarmVm farmVm) {
+        if (farmVm.getId() == null) throw new mustBeNotNullException("Id");
 
-        if (farmService.getFarm(farm.getId()) != null) {
-            return ResponseEntity.ok(farmDtoMapper.toFarmVm(farmService.update(farm)));
+        if (farmService.getFarm(farmVm.getId()) != null) {
+            return ResponseEntity.ok(farmDtoMapper.toFarmVm(farmService.update(farmVmMapper.toFarm(farmVm))));
         }
 
         return ResponseUtil.notFound("Farm");
@@ -69,7 +69,7 @@ public class FarmController {
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String location
     ) {
-        return ResponseEntity.ok(farmService.searchAll(name, area, location, creationDate, id));
+        return ResponseEntity.ok(farmVmMapper.toFarmVmList(farmService.searchAll(name, area, location, creationDate, id)));
     }
 
 }
