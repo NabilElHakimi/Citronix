@@ -1,7 +1,6 @@
 
 package me.elhakimi.citronix.rest.controller;
 
-
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Field;
@@ -46,9 +45,6 @@ public class TreeController {
 
         return ResponseUtil.saveFailed("Tree");
     }
-
-
-
 
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody TreeDTO tree) {
