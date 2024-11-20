@@ -48,8 +48,10 @@ public class TreeController {
 
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody TreeDTO tree) {
+
         Tree updatedTree = treeService.update(tree);
         if (updatedTree != null) {
+            System.out.printf("Updated tree: %s\n", updatedTree);
             return ResponseUtil.updateSuccessfully("Tree", treeVmMapper.toTreeVm(updatedTree));
         }
 
