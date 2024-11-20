@@ -1,18 +1,18 @@
-package me.elhakimi.citronix.rest.vm;
+    package me.elhakimi.citronix.rest.vm;
 
-import lombok.Getter;
-import lombok.Setter;
+    import lombok.Getter;
+    import lombok.Setter;
 
-import java.time.LocalDate;
+    import java.time.LocalDate;
 
-@Getter
-@Setter
-public class TreeVm {
+    @Getter
+    @Setter
+    public class TreeVm {
 
+        private Long id;
+        private FieldVm field;
+        private LocalDate plantingDate;
+        private int age;
+        private double productivity ;
 
-    private Long id;
-    private LocalDate plantingDate;
-    private int age;
-    private double productivity ;
-
-}
+    }

@@ -4,6 +4,7 @@ package me.elhakimi.citronix.rest.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.domain.dto.TreeDTO;
 import me.elhakimi.citronix.rest.vm.TreeVm;
@@ -25,14 +26,29 @@ public class TreeController {
     private final TreeVmMapper treeVmMapper;
 
     @PostMapping
-    public ResponseEntity<Object> save(@Valid @RequestBody TreeDTO tree) {
+    public ResponseEntity<Object> save(@Valid @RequestBody TreeVm treeVm) {
+
+        if (treeVm.getId() != null) return ResponseUtil.saveFailed("Tree");
+
+        if (treeVm.getField() == null || treeVm.getField().getId() == null)
+            return ResponseUtil.saveFailed("Tree: Field");
+
+        Tree tree = treeVmMapper.toTree(treeVm);
+        Field field = new Field();
+        field.setId(treeVm.getField().getId());
+        tree.setField(field);
+
         Tree savedTree = treeService.save(tree);
+
         if (savedTree != null) {
             return ResponseUtil.saveSuccessfully("Tree", treeVmMapper.toTreeVm(savedTree));
         }
 
         return ResponseUtil.saveFailed("Tree");
     }
+
+
+
 
     @PutMapping
     public ResponseEntity<Object> update(@Valid @RequestBody TreeDTO tree) {

@@ -23,14 +23,21 @@ public class TreeServiceImpl {
     private final  FieldServiceImpl fieldService;
     private final TreeDtoMapper treeDtoMapper;
 
-    public Tree save(TreeDTO tree) {
+    public Tree save(Tree tree) {
 
-        Field field = fieldService.getField(tree.getFiledId())
+        if(tree.getId() != null) {
+            throw new NotFoundException("Tree");
+        }
+
+        if(tree.getField() == null) {
+            throw new NotFoundException("Field");
+        }
+
+        Field field = fieldService.getField(tree.getField().getId())
                 .orElseThrow(() -> new NotFoundException("Field") );
-            Tree treeToSave = treeDtoMapper.toEntity(tree);
-            treeToSave.setField(field);
-            return treeRepository.save(treeToSave);
 
+        tree.setField(field);
+        return treeRepository.save(tree);
     }
 
     public Tree update(TreeDTO tree) {
