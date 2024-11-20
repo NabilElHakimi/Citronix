@@ -14,6 +14,7 @@ import java.util.List;
 
 public class FieldVm {
     private Long id;
+    private String name;
     private double area;
     private List<Tree> trees = new ArrayList<>();
 

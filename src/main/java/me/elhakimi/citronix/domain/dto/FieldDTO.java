@@ -8,6 +8,7 @@ import me.elhakimi.citronix.domain.Farm;
 public class FieldDTO {
 
         private Long id;
+        private String name;
         private double area;
         private Farm farm;
 
