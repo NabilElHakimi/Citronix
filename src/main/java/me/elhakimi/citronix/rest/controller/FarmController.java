@@ -3,7 +3,6 @@ package me.elhakimi.citronix.rest.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import me.elhakimi.citronix.domain.dto.mapper.FarmDtoMapper;
@@ -27,7 +26,7 @@ public class FarmController {
 
     @GetMapping
     public ResponseEntity<Object> getFarm() {
-        return ResponseEntity.ok(farmService.getFarms());
+        return ResponseEntity.ok(farmVmMapper.toFarmVmList(farmService.getFarms()));
     }
 
     @PostMapping

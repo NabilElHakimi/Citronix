@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface FieldVmMapper {
 
-    Field toFieldVm(FieldVm fieldVm);
-    FieldVm toField(Field field);
+    Field toField(FieldVm fieldVm);
+    FieldVm toFieldVm(Field field);
 
 }
