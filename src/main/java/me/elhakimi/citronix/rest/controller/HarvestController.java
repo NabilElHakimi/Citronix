@@ -57,7 +57,13 @@ public class HarvestController {
         }
 
         @DeleteMapping("/{id}")
-        public void delete(@PathVariable Long id) {
-            harvestService.delete(id);
+        public ResponseEntity<Object> delete(@PathVariable Long id) {
+
+            if(id == null || id < 0 ) return ResponseUtil.notFound("Harvest");
+            Harvest harvest = harvestService.findById(id);
+            if(harvest == null) return ResponseUtil.notFound("Harvest");
+            return ResponseUtil.deleteSuccessfully("Harvest");
+
         }
+
 }
