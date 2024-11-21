@@ -23,7 +23,7 @@ public class HarvestServiceImpl {
 
     public Harvest save(Harvest harvest) {
 
-        Harvest harvestCheck = harvestRepository.findBySeason(harvest.getSeason());
+        Harvest harvestCheck = harvestRepository.findLastBySeason(harvest.getSeason());
 
         if (harvestCheck != null && harvest.getHarvestDate().getYear() == harvestCheck.getHarvestDate().getYear())
             throw new YouCanOnlyHarvestOncePerSeason();
@@ -37,7 +37,7 @@ public class HarvestServiceImpl {
         if(harvestCheck == null) throw new NotFoundException("Harvest");
 
         if(harvest.getSeason() != null && harvestCheck.getSeason() != harvest.getSeason()){
-            Harvest harvestCheckSeason = harvestRepository.findBySeason(harvest.getSeason());
+            Harvest harvestCheckSeason = harvestRepository.findLastBySeason(harvest.getSeason());
             if (harvestCheckSeason != null && harvest.getHarvestDate().getYear() == harvestCheckSeason.getHarvestDate().getYear())
                 throw new YouCanOnlyHarvestOncePerSeason();
         }
@@ -60,6 +60,7 @@ public class HarvestServiceImpl {
     public void delete(Long id) {
         harvestRepository.deleteById(id);
     }
+
 
 
 
