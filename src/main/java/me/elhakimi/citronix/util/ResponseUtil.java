@@ -30,7 +30,7 @@ public class ResponseUtil {
     }
 
     public static ResponseEntity<Object> getSuccessfully(String name, Object object) {
-        return createResponse(name + " retrieved successfully.", HttpStatus.OK, object);
+        return createResponse(name + " retrieved successfully.", HttpStatus.OK , object);
     }
 
     private static ResponseEntity<Object> createResponse(String message, HttpStatus status, Object data) {

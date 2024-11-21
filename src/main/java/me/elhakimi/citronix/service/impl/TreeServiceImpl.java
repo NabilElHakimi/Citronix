@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.Repository.TreeRepository;
 import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.domain.Tree;
-import me.elhakimi.citronix.domain.dto.mapper.TreeDtoMapper;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
-import me.elhakimi.citronix.domain.dto.TreeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +19,6 @@ public class TreeServiceImpl {
 
     private final TreeRepository treeRepository;
     private final  FieldServiceImpl fieldService;
-    private final TreeDtoMapper treeDtoMapper;
 
     public Tree save(Tree tree) {
 
@@ -40,24 +37,24 @@ public class TreeServiceImpl {
         return treeRepository.save(tree);
     }
 
-    public Tree update(TreeDTO tree) {
-
-        if(tree.getId() == null) {
-            throw new NotFoundException("Tree");
-        }
-
-        if(!treeRepository.existsById(tree.getId())) {
-            throw new NotFoundException("Tree");
-        }
-
-        Field field = fieldService.getField(tree.getFiledId())
-                .orElseThrow(() -> new NotFoundException("Field") );
-
-        Tree treeToSave = treeDtoMapper.toEntity(tree);
-        treeToSave.setField(field);
-        return treeRepository.save(treeToSave);
-
-    }
+//    public Tree update(TreeDTO tree) {
+//
+//        if(tree.getId() == null) {
+//            throw new NotFoundException("Tree");
+//        }
+//
+//        if(!treeRepository.existsById(tree.getId())) {
+//            throw new NotFoundException("Tree");
+//        }
+//
+//        Field field = fieldService.getField(tree.getFiledId())
+//                .orElseThrow(() -> new NotFoundException("Field") );
+//
+//        Tree treeToSave = treeDtoMapper.toEntity(tree);
+//        treeToSave.setField(field);
+//        return treeRepository.save(treeToSave);
+//
+//    }
 
     public Page<Tree> findAll(int page, int size) {
 

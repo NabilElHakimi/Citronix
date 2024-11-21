@@ -1,8 +1,63 @@
 package me.elhakimi.citronix.service.impl;
 
 
+import lombok.AllArgsConstructor;
+import me.elhakimi.citronix.Repository.HarvestDetailRepository;
+import me.elhakimi.citronix.domain.Harvest;
+import me.elhakimi.citronix.domain.HarvestDetail;
+import me.elhakimi.citronix.domain.Tree;
+import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
+@AllArgsConstructor
 public class HarvestDetailServiceImpl {
+
+    private final HarvestDetailRepository harvestDetailRepository;
+    private final HarvestServiceImpl harvestService;
+    private final TreeServiceImpl treeService;
+
+    public HarvestDetail save(HarvestDetail harvestDetail) {
+
+        Harvest harvest = harvestService.findById(harvestDetail.getHarvest().getId());
+        if (harvest == null)    throw new NotFoundException("Harvest");
+
+        Tree tree = treeService.getTree(harvestDetail.getTree().getId());
+        if (tree == null)    throw new NotFoundException("Tree");
+
+        if(harvestDetail.getQuantity() < 1  ) throw new NotFoundException("Tree Quantity");
+
+        return harvestDetailRepository.save(harvestDetail);
+    }
+
+    public HarvestDetail update(HarvestDetail harvestDetail) {
+
+        return harvestDetailRepository.save(harvestDetail);
+    }
+
+    public HarvestDetail findById(Long id) {
+        return harvestDetailRepository.findById(id).orElse(null);
+    }
+
+    public void delete(Long id) {
+        harvestDetailRepository.deleteById(id);
+    }
+
+
+
+    public Page<HarvestDetail> findAll(int page, int size) {
+
+        page = page < 1 ? 0 : page - 1;
+
+        Pageable pageable = PageRequest.of(page, size);
+        return harvestDetailRepository.findAll(pageable);
+    }
+
+
+
 }

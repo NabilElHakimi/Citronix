@@ -4,10 +4,14 @@ package me.elhakimi.citronix.service.impl;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.Repository.HarvestRepository;
 import me.elhakimi.citronix.domain.Harvest;
-import me.elhakimi.citronix.domain.dto.HarvestDTO;
-import me.elhakimi.citronix.domain.dto.mapper.HarvestDtoMapper;
+import me.elhakimi.citronix.domain.HarvestDetail;
+import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.rest.exception.exceptions.YouCanOnlyHarvestOncePerSeason;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ThemeResolver;
 
 import java.util.List;
 
@@ -16,63 +20,58 @@ import java.util.List;
 public class HarvestServiceImpl {
 
     private final HarvestRepository harvestRepository;
-    private final HarvestDtoMapper harvestMapper;
 
-    public List<Harvest> getHarvests(int page , int size) {
-        return harvestRepository.findAll(Pageable.ofSize(size).withPage(page)).getContent();
+    public Harvest save(Harvest harvest) {
+
+        List<Harvest> harvestCheck = harvestRepository.findLastBySeason(harvest.getSeason());
+
+        harvestCheck.forEach(harvest1 -> {
+            if (harvest.getHarvestDate().getYear() == harvest1.getHarvestDate().getYear())
+                throw new YouCanOnlyHarvestOncePerSeason();
+        });
+
+        return harvestRepository.save(harvest);
     }
+    public Harvest update(Harvest harvest) {
 
-    public HarvestDTO save(HarvestDTO harvestDto) {
+        Harvest existingHarvest = harvestRepository.findById(harvest.getId()).orElse(null);
+        if (existingHarvest == null) throw new NotFoundException("Harvest");
 
-        if (harvestDto.getId() != null) {
-            throw new IllegalArgumentException("Harvest id must be null");
-        }
+        if(existingHarvest.getHarvestDate().getYear() != harvest.getHarvestDate().getYear()) {
+            List<Harvest> harvestCheck = harvestRepository.findLastBySeason(harvest.getSeason());
 
-        Harvest harvest = harvestMapper.toHarvest(harvestDto);
-
-        if (harvestDto.getDetails() != null) {
-            harvestDto.getDetails().forEach(harvestDetail -> {
-                harvestDetail.setHarvest(harvest);
+            harvestCheck.forEach(harvest1 -> {
+                if (harvest.getHarvestDate().getYear() == harvest1.getHarvestDate().getYear())
+                    throw new YouCanOnlyHarvestOncePerSeason();
             });
         }
 
-        Harvest savedHarvest = harvestRepository.save(harvest);
-        return harvestMapper.toHarvestDto(savedHarvest);
+        return harvestRepository.save(harvest);
     }
 
-    public Harvest getHarvest(Long id) {
-        return harvestRepository.findById(id)
-                .orElse(null);
+
+    public Page<Harvest> findAll(int page, int size) {
+
+        page = page < 1 ? 0 : page - 1;
+
+        Pageable pageable = PageRequest.of(page, size);
+        return harvestRepository.findAll(pageable);
+
     }
 
+    public Harvest findById(Long id) {
+        return harvestRepository.findById(id).orElse(null);
+    }
 
     public void delete(Long id) {
         harvestRepository.deleteById(id);
     }
 
-    public HarvestDTO  update(HarvestDTO harvestDto) {
-        if (harvestDto.getId() == null) {
-            throw new IllegalArgumentException("Harvest id must not be null");
-        }
 
-        Harvest harvest = harvestMapper.toHarvest(harvestDto);
 
-        if (harvestDto.getDetails() != null) {
-            harvestDto.getDetails().forEach(harvestDetail -> {
-                harvestDetail.setHarvest(harvest);
-            });
-        }
 
-        Harvest savedHarvest = harvestRepository.save(harvest);
-        return harvestMapper.toHarvestDto(savedHarvest);
+
+
 
     }
 
-
-
-
-
-
-
-
-}
