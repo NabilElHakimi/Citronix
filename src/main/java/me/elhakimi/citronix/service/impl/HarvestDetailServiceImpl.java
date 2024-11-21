@@ -35,6 +35,11 @@ public class HarvestDetailServiceImpl {
         return harvestDetailRepository.save(harvestDetail);
     }
 
+    public HarvestDetail update(HarvestDetail harvestDetail) {
+
+        return harvestDetailRepository.save(harvestDetail);
+    }
+
     public HarvestDetail findById(Long id) {
         return harvestDetailRepository.findById(id).orElse(null);
     }
@@ -43,9 +48,7 @@ public class HarvestDetailServiceImpl {
         harvestDetailRepository.deleteById(id);
     }
 
-    public HarvestDetail update(HarvestDetail harvestDetail) {
-        return harvestDetailRepository.save(harvestDetail);
-    }
+
 
     public Page<HarvestDetail> findAll(int page, int size) {
 

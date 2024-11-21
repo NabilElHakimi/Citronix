@@ -4,10 +4,14 @@ package me.elhakimi.citronix.service.impl;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.Repository.HarvestRepository;
 import me.elhakimi.citronix.domain.Harvest;
+import me.elhakimi.citronix.domain.HarvestDetail;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import me.elhakimi.citronix.rest.exception.exceptions.YouCanOnlyHarvestOncePerSeason;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ThemeResolver;
 
 import java.util.List;
 
@@ -27,8 +31,26 @@ public class HarvestServiceImpl {
         return harvestRepository.save(harvest);
     }
 
-    public List<Harvest> findAll(Pageable pageable) {
-        return harvestRepository.findAll(pageable).getContent();
+    public Harvest update(Harvest harvest) {
+
+        Harvest harvestCheck = harvestRepository.findById(harvest.getId()).orElse(null);
+        if(harvestCheck == null) throw new NotFoundException("Harvest");
+
+        if(harvest.getSeason() != null && harvestCheck.getSeason() != harvest.getSeason()){
+            Harvest harvestCheckSeason = harvestRepository.findBySeason(harvest.getSeason());
+            if (harvestCheckSeason != null && harvest.getHarvestDate().getYear() == harvestCheckSeason.getHarvestDate().getYear())
+                throw new YouCanOnlyHarvestOncePerSeason();
+        }
+
+        return harvestRepository.save(harvest);
+    }
+
+    public Page<Harvest> findAll(int page, int size) {
+
+        page = page < 1 ? 0 : page - 1;
+
+        Pageable pageable = PageRequest.of(page, size);
+        return harvestRepository.findAll(pageable);
     }
 
     public Harvest findById(Long id) {
@@ -39,9 +61,7 @@ public class HarvestServiceImpl {
         harvestRepository.deleteById(id);
     }
 
-    public Harvest update(Harvest harvest) {
-        return harvestRepository.save(harvest);
-    }
+
 
 
 
