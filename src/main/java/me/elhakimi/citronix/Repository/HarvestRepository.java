@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface HarvestRepository extends JpaRepository<Harvest, Long> {
 
-        @Query("SELECT h FROM Harvest h WHERE h.season = :season ORDER BY h.id DESC LIMIT 1")
-        Harvest findLastBySeason(Season season);
-}
+        @Query("SELECT h FROM Harvest h WHERE h.season = :season ORDER BY h.harvestDate DESC")
+                        List<Harvest> findLastBySeason(Season season);
+                }

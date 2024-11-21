@@ -31,8 +31,15 @@ public class HarvestController {
         }
 
         @PutMapping
-        public Harvest update(@RequestBody Harvest harvest) {
-            return harvestService.update(harvest);
+        public ResponseEntity<Object> update(@RequestBody Harvest harvest) {
+
+            if(harvest.getId() == null) return ResponseUtil.notFound("Harvest");
+
+            Harvest harvestToSave = harvestService.update(harvest);
+            if(harvestToSave == null) return ResponseUtil.notFound("Harvest");
+
+            return ResponseUtil.updateSuccessfully("Harvest" , harvestToSave);
+
         }
 
         @GetMapping
@@ -41,8 +48,12 @@ public class HarvestController {
         }
 
         @GetMapping("/{id}")
-        public Harvest findById(@PathVariable Long id) {
-            return harvestService.findById(id);
+        public ResponseEntity<Object> findById(@PathVariable Long id) {
+
+            if(id == null || id < 0 ) return ResponseUtil.notFound("Harvest");
+            Harvest harvest = harvestService.findById(id);
+            if(harvest == null) return ResponseUtil.notFound("Harvest");
+            return ResponseUtil.getSuccessfully("Harvest", harvestService.findById(id));
         }
 
         @DeleteMapping("/{id}")

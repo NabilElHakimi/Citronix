@@ -23,27 +23,32 @@ public class HarvestServiceImpl {
 
     public Harvest save(Harvest harvest) {
 
-        Harvest harvestCheck = harvestRepository.findLastBySeason(harvest.getSeason());
+        List<Harvest> harvestCheck = harvestRepository.findLastBySeason(harvest.getSeason());
 
-        if (harvestCheck != null && harvest.getHarvestDate().getYear() == harvestCheck.getHarvestDate().getYear())
-            throw new YouCanOnlyHarvestOncePerSeason();
+        harvestCheck.forEach(harvest1 -> {
+            if (harvest.getHarvestDate().getYear() == harvest1.getHarvestDate().getYear())
+                throw new YouCanOnlyHarvestOncePerSeason();
+        });
 
         return harvestRepository.save(harvest);
     }
-
     public Harvest update(Harvest harvest) {
 
-        Harvest harvestCheck = harvestRepository.findById(harvest.getId()).orElse(null);
-        if(harvestCheck == null) throw new NotFoundException("Harvest");
+        Harvest existingHarvest = harvestRepository.findById(harvest.getId()).orElse(null);
+        if (existingHarvest == null) throw new NotFoundException("Harvest");
 
-        if(harvest.getSeason() != null && harvestCheck.getSeason() != harvest.getSeason()){
-            Harvest harvestCheckSeason = harvestRepository.findLastBySeason(harvest.getSeason());
-            if (harvestCheckSeason != null && harvest.getHarvestDate().getYear() == harvestCheckSeason.getHarvestDate().getYear())
-                throw new YouCanOnlyHarvestOncePerSeason();
+        if(existingHarvest.getHarvestDate().getYear() != harvest.getHarvestDate().getYear()) {
+            List<Harvest> harvestCheck = harvestRepository.findLastBySeason(harvest.getSeason());
+
+            harvestCheck.forEach(harvest1 -> {
+                if (harvest.getHarvestDate().getYear() == harvest1.getHarvestDate().getYear())
+                    throw new YouCanOnlyHarvestOncePerSeason();
+            });
         }
 
         return harvestRepository.save(harvest);
     }
+
 
     public Page<Harvest> findAll(int page, int size) {
 
