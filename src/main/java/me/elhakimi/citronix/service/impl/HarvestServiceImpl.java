@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.Repository.HarvestRepository;
 import me.elhakimi.citronix.domain.Harvest;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.rest.exception.exceptions.YouCanOnlyHarvestOncePerSeason;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,9 @@ public class HarvestServiceImpl {
     public Harvest save(Harvest harvest) {
 
         Harvest harvestCheck = harvestRepository.findBySeason(harvest.getSeason());
-        if (harvestCheck != null && harvest.getHarvestDate().getYear() == harvestCheck.getHarvestDate().getYear())  throw new NotFoundException("Harvest");
+
+        if (harvestCheck != null && harvest.getHarvestDate().getYear() == harvestCheck.getHarvestDate().getYear())
+            throw new YouCanOnlyHarvestOncePerSeason();
 
         return harvestRepository.save(harvest);
     }

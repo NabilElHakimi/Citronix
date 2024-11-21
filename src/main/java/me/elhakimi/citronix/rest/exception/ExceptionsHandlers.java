@@ -2,6 +2,7 @@ package me.elhakimi.citronix.rest.exception;
 
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.rest.exception.exceptions.YouCanOnlyHarvestOncePerSeason;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,14 @@ public class ExceptionsHandlers {
 
     @ExceptionHandler(DontHaveAreaException.class)
     public ResponseEntity<Map<String, Object>> handleDontHaveAreaException(DontHaveAreaException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", HttpStatus.BAD_REQUEST.value());
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(YouCanOnlyHarvestOncePerSeason.class)
+    public ResponseEntity<Map<String, Object>> handleYouCanOnlyHarvestOncePerSeason(YouCanOnlyHarvestOncePerSeason ex) {
         Map<String, Object> response = new HashMap<>();
         response.put("status", HttpStatus.BAD_REQUEST.value());
         response.put("message", ex.getMessage());
