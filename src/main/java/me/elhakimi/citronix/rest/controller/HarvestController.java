@@ -9,12 +9,8 @@ import me.elhakimi.citronix.rest.vm.mapper.HarvestVmMapper;
 import me.elhakimi.citronix.service.impl.HarvestServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/harvest")
