@@ -23,6 +23,8 @@ public class HarvestVm {
     @PositiveOrZero
     private double totalQuantity;
 
-    private List<HarvestDetailVm> details = new ArrayList<>();
+    private List<HarvestDetail> details = new ArrayList<>();
+
+
 
 }
