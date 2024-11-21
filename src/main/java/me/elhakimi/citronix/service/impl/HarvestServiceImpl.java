@@ -4,6 +4,7 @@ package me.elhakimi.citronix.service.impl;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.Repository.HarvestRepository;
 import me.elhakimi.citronix.domain.Harvest;
+import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,10 @@ public class HarvestServiceImpl {
     private final HarvestRepository harvestRepository;
 
     public Harvest save(Harvest harvest) {
+
+        Harvest harvestCheck = harvestRepository.findBySeason(harvest.getSeason());
+        if (harvestCheck != null && harvest.getHarvestDate().getYear() == harvestCheck.getHarvestDate().getYear())  throw new NotFoundException("Harvest");
+
         return harvestRepository.save(harvest);
     }
 
@@ -34,6 +39,8 @@ public class HarvestServiceImpl {
     public Harvest update(Harvest harvest) {
         return harvestRepository.save(harvest);
     }
+
+
 
 
     }

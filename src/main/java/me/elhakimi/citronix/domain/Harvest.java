@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
     public class Harvest {
+
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
