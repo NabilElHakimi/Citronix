@@ -14,9 +14,11 @@ public interface FieldVmMapper {
 
 
     @Mapping(target = "id" , source = "id")
+    @Mapping(source = "farmId" , target = "farm.id")
     Field toField(FieldVm fieldVm);
 
     @Mapping(target = "id" , source = "id")
+    @Mapping(target = "farmId" , source = "farm.id")
     FieldVm toFieldVm(Field field);
 
 }

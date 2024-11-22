@@ -45,17 +45,29 @@ public class TreeController {
         return ResponseUtil.saveFailed("Tree");
     }
 
-//    @PutMapping
-//    public ResponseEntity<Object> update(@Valid @RequestBody TreeDTO tree) {
 
-//        Tree updatedTree = treeService.update(tree);
-//        if (updatedTree != null) {
-//            System.out.printf("Updated tree: %s\n", updatedTree);
-//            return ResponseUtil.updateSuccessfully("Tree", treeVmMapper.toTreeVm(updatedTree));
-//        }
+    @PutMapping
+    public ResponseEntity<Object> update(@Valid @RequestBody TreeVm treeVm) {
 
-//        return ResponseUtil.notFound("Tree");
-//    }
+        if (treeVm.getId() == null) return ResponseUtil.notFound("Tree");
+
+        if (treeVm.getField() == null || treeVm.getField().getId() == null)
+            return ResponseUtil.notFound("Tree: Field");
+
+        Tree tree = treeVmMapper.toTree(treeVm);
+        Field field = new Field();
+        field.setId(treeVm.getField().getId());
+        tree.setField(field);
+
+        Tree updatedTree = treeService.save(tree);
+
+        if (updatedTree != null) {
+            return ResponseUtil.updateSuccessfully("Tree", treeVmMapper.toTreeVm(updatedTree));
+        }
+
+        return ResponseUtil.notFound("Tree");
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getTree(@PathVariable Long id) {

@@ -21,17 +21,41 @@ public class FieldController {
     private FieldVmMapper fieldVmMapper;
 
     @PostMapping
-    public ResponseEntity<Object> saveField(@Valid @RequestBody FieldVm fieldVm, @RequestParam Long id) {
+    public ResponseEntity<Object> saveField(@Valid @RequestBody FieldVm fieldVm) {
 
         if(fieldVm.getId() != null) return ResponseUtil.saveFailed("Field");
         if(fieldVm.getArea() < 0.1) return ResponseUtil.saveFailed("Field: Area");
-        if(id == null || id <= 0 )  return ResponseUtil.saveFailed("Field: Farm");
+        if(fieldVm.getFarmId() == null || fieldVm.getFarmId() <= 0 )  return ResponseUtil.saveFailed("Field: Farm");
 
-        Field savedField = fieldService.saveField(fieldVmMapper.toField(fieldVm), id);
+        Field savedField = fieldService.saveField(fieldVmMapper.toField(fieldVm));
 
         return savedField != null
                 ? ResponseUtil.saveSuccessfully("Field", fieldVmMapper.toFieldVm(savedField))
                 : ResponseUtil.saveFailed("Field");
+    }
+
+    @PutMapping
+    public ResponseEntity<Object> updateField(@Valid @RequestBody FieldVm fieldVm) {
+
+        if(fieldVm.getId() == null || fieldVm.getId() <= 0) return ResponseUtil.notFound("Field");
+        if(fieldVm.getArea() < 0.1) return ResponseUtil.notFound("Field: Area");
+        if(fieldVm.getFarmId() == null || fieldVm.getFarmId() <= 0 )  return ResponseUtil.notFound("Field: Farm");
+
+        Field updatedField = fieldService.updateField(fieldVmMapper.toField(fieldVm));
+
+        return updatedField != null
+                ? ResponseUtil.updateSuccessfully("Field", fieldVmMapper.toFieldVm(updatedField))
+                : ResponseUtil.notFound("Field");
+    }
+
+    @DeleteMapping("/{fieldId}")
+    public ResponseEntity<Object> deleteField(@PathVariable Long fieldId) {
+
+        if(fieldId == null || fieldId <= 0) return ResponseUtil.notFound("Field");
+
+        fieldService.deleteField(fieldId);
+
+        return ResponseUtil.deleteSuccessfully("Field");
     }
 
 
