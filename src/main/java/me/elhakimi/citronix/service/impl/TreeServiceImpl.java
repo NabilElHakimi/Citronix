@@ -6,20 +6,20 @@ import me.elhakimi.citronix.Repository.TreeRepository;
 import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.service.CrudService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
-public class TreeServiceImpl {
+public class TreeServiceImpl implements CrudService<Tree> {
 
     private final TreeRepository treeRepository;
     private final  FieldServiceImpl fieldService;
 
+    @Override
     public Tree save(Tree tree) {
 
         if(tree.getId() != null) {
@@ -30,31 +30,38 @@ public class TreeServiceImpl {
             throw new NotFoundException("Field");
         }
 
-        Field field = fieldService.getField(tree.getField().getId())
-                .orElseThrow(() -> new NotFoundException("Field") );
+        Field field = fieldService.findById(tree.getField().getId()) ;
+        if (field == null) {
+            throw new NotFoundException("Field");
+        }
 
         tree.setField(field);
         return treeRepository.save(tree);
     }
 
-//    public Tree update(TreeDTO tree) {
-//
-//        if(tree.getId() == null) {
-//            throw new NotFoundException("Tree");
-//        }
-//
-//        if(!treeRepository.existsById(tree.getId())) {
-//            throw new NotFoundException("Tree");
-//        }
-//
-//        Field field = fieldService.getField(tree.getFiledId())
-//                .orElseThrow(() -> new NotFoundException("Field") );
-//
-//        Tree treeToSave = treeDtoMapper.toEntity(tree);
-//        treeToSave.setField(field);
-//        return treeRepository.save(treeToSave);
-//
-//    }
+    @Override
+    public Tree update(Tree tree) {
+
+        if(tree.getId() == null) {
+            throw new NotFoundException("Tree");
+        }
+
+        if(!treeRepository.existsById(tree.getId())) {
+            throw new NotFoundException("Tree");
+        }
+
+        if(tree.getField() == null) {
+            throw new NotFoundException("Field");
+        }
+
+        Field field = fieldService.findById(tree.getField().getId());
+        if (field == null) {
+            throw new NotFoundException("Field");
+        }
+
+        tree.setField(field);
+        return treeRepository.save(tree);
+    }
 
     public Page<Tree> findAll(int page, int size) {
 
@@ -64,6 +71,7 @@ public class TreeServiceImpl {
         return treeRepository.findAll(pageable);
     }
 
+    @Override
     public void delete(Long id) {
 
         if(id == null) throw new NotFoundException("Tree");
@@ -73,7 +81,8 @@ public class TreeServiceImpl {
         treeRepository.deleteById(id);
     }
 
-    public Tree getTree(Long id) {
+    @Override
+    public Tree findById(Long id) {
         return treeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Tree"));
     }

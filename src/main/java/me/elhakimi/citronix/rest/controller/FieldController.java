@@ -27,7 +27,7 @@ public class FieldController {
         if(fieldVm.getArea() < 0.1) return ResponseUtil.saveFailed("Field: Area");
         if(fieldVm.getFarmId() == null || fieldVm.getFarmId() <= 0 )  return ResponseUtil.saveFailed("Field: Farm");
 
-        Field savedField = fieldService.saveField(fieldVmMapper.toField(fieldVm));
+        Field savedField = fieldService.save(fieldVmMapper.toField(fieldVm));
 
         return savedField != null
                 ? ResponseUtil.saveSuccessfully("Field", fieldVmMapper.toFieldVm(savedField))
@@ -41,7 +41,7 @@ public class FieldController {
         if(fieldVm.getArea() < 0.1) return ResponseUtil.notFound("Field: Area");
         if(fieldVm.getFarmId() == null || fieldVm.getFarmId() <= 0 )  return ResponseUtil.notFound("Field: Farm");
 
-        Field updatedField = fieldService.updateField(fieldVmMapper.toField(fieldVm));
+        Field updatedField = fieldService.update(fieldVmMapper.toField(fieldVm));
 
         return updatedField != null
                 ? ResponseUtil.updateSuccessfully("Field", fieldVmMapper.toFieldVm(updatedField))
@@ -53,7 +53,7 @@ public class FieldController {
 
         if(fieldId == null || fieldId <= 0) return ResponseUtil.notFound("Field");
 
-        fieldService.deleteField(fieldId);
+        fieldService.delete(fieldId);
 
         return ResponseUtil.deleteSuccessfully("Field");
     }

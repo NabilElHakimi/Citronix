@@ -39,7 +39,7 @@ public class FarmController {
     public ResponseEntity<Object> updateFarm(@RequestBody @Valid FarmVm farmVm) {
         if (farmVm.getId() == null) throw new mustBeNotNullException("Id");
 
-        if (farmService.getFarm(farmVm.getId()) != null) {
+        if (farmService.findById(farmVm.getId()) != null) {
             return ResponseEntity.ok(farmVmMapper.toFarmVm(farmService.update(farmVmMapper.toFarm(farmVm))));
         }
 
@@ -49,7 +49,7 @@ public class FarmController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteFarm(@PathVariable Long id) {
 
-        if(farmService.getFarm(id) != null) {
+        if(farmService.findById(id) != null) {
             farmService.delete(id);
             return ResponseUtil.deleteSuccessfully("Farm");
         }

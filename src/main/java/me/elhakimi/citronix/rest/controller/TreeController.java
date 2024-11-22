@@ -71,7 +71,7 @@ public class TreeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getTree(@PathVariable Long id) {
-        Tree tree = treeService.getTree(id);
+        Tree tree = treeService.findById(id);
         if (tree != null) {
             return ResponseUtil.getSuccessfully("Tree", treeVmMapper.toTreeVm(tree));
         }

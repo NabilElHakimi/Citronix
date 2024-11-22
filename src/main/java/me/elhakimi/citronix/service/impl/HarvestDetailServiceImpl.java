@@ -7,6 +7,7 @@ import me.elhakimi.citronix.domain.HarvestDetail;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.service.CrudService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,19 +16,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class HarvestDetailServiceImpl {
+public class HarvestDetailServiceImpl implements CrudService<HarvestDetail> {
 
     private final HarvestDetailRepository harvestDetailRepository;
     private final HarvestServiceImpl harvestService;
     private final TreeServiceImpl treeService;
 
+    @Override
     public HarvestDetail save(HarvestDetail harvestDetail) {
 
         Harvest harvest = harvestService.findById(harvestDetail.getHarvest().getId());
         if (harvest == null)    throw new NotFoundException("Harvest");
 
 
-        Tree tree = treeService.getTree(harvestDetail.getTree().getId());
+        Tree tree = treeService.findById(harvestDetail.getTree().getId());
         if (tree == null)    throw new NotFoundException("Tree");
 
         double checkTotalQuantity = harvest.getDetails().stream().mapToDouble(HarvestDetail::getQuantity).sum();
@@ -37,7 +39,7 @@ public class HarvestDetailServiceImpl {
 
         return harvestDetailRepository.save(harvestDetail);
     }
-
+    @Override
     public HarvestDetail update(HarvestDetail harvestDetail) {
 
         if(harvestDetail.getId() == null) throw new NotFoundException("Harvest Detail");
@@ -46,7 +48,7 @@ public class HarvestDetailServiceImpl {
 
         if (harvest == null)    throw new NotFoundException("Harvest");
 
-        Tree tree = treeService.getTree(harvestDetail.getTree().getId());
+        Tree tree = treeService.findById(harvestDetail.getTree().getId());
         if (tree == null)    throw new NotFoundException("Tree");
 
         if(harvestDetail.getQuantity() < 1  ) throw new NotFoundException("Tree Quantity");
@@ -54,11 +56,11 @@ public class HarvestDetailServiceImpl {
         return harvestDetailRepository.save(harvestDetail);
 
     }
-
+    @Override
     public HarvestDetail findById(Long id) {
         return harvestDetailRepository.findById(id).orElse(null);
     }
-
+    @Override
     public void delete(Long id) {
         harvestDetailRepository.deleteById(id);
     }
