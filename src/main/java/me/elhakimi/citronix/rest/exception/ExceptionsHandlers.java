@@ -17,6 +17,8 @@ import java.util.Map;
 @RestControllerAdvice
 public class ExceptionsHandlers {
 
+
+
     @ExceptionHandler(mustBeNullException.class)
     public ResponseEntity<Map<String, Object>> handleFieldMustBeNullException(mustBeNullException ex) {
         Map<String, Object> response = new HashMap<>();
@@ -24,6 +26,7 @@ public class ExceptionsHandlers {
         response.put("message", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -63,5 +66,8 @@ public class ExceptionsHandlers {
         response.put("message", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+
+
 
 }

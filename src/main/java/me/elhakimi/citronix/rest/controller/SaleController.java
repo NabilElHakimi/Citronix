@@ -2,6 +2,7 @@
 package me.elhakimi.citronix.rest.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Sale;
 import me.elhakimi.citronix.rest.vm.SaleVm;
@@ -20,7 +21,7 @@ public class SaleController {
     private final SaleVmMapper saleVmMapper;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody SaleVm saleVm) {
+    public ResponseEntity<Object> save(@RequestBody @Valid  SaleVm saleVm) {
 
         if(saleVm.getId() != null) {
             return ResponseUtil.mustBeNullException("Id");
@@ -32,7 +33,7 @@ public class SaleController {
     }
 
     @PutMapping
-    public ResponseEntity<Object> update(@RequestBody SaleVm saleVm) {
+    public ResponseEntity<Object> update(@RequestBody @Valid  SaleVm saleVm) {
 
         if(saleVm.getId() == null) {
             return ResponseUtil.mustBeNotNullException("Id");
@@ -44,13 +45,26 @@ public class SaleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable Long id) {
+    public ResponseEntity<Object> delete(@PathVariable  Long id) {
         Sale sale = saleService.findById(id);
         if(sale == null) {
             return ResponseUtil.notFound("Sale");
         }
+        saleService.delete(sale);
         return ResponseUtil.deleteSuccessfully("Sale");
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> findById(@PathVariable Long id) {
+
+        Sale saleToDelete = saleService.findById(id);
+
+        if(saleToDelete == null) {
+            return ResponseUtil.notFound("Sale");
+        }
+        saleService.delete(saleToDelete);
+
+        return ResponseUtil.deleteSuccessfully("Sale");
+    }
 
 }

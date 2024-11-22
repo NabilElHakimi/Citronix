@@ -37,5 +37,9 @@ public class SaleServiceImpl {
         return saleRepository.save(sale);
     }
 
+    public void delete(Sale sale) {
+        saleRepository.delete(sale);
+    }
+
 
 }
