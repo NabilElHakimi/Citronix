@@ -26,7 +26,7 @@ public class FarmServiceImpl {
     public Farm save(Farm farm) {
 
         double areaSum = farm.getFields().stream().mapToDouble(Field::getArea).sum();
-        if(areaSum > farm.getArea()) throw new DontHaveAreaException();
+        if(areaSum > farm.getArea()) throw new DontHaveAreaException("Field");
                      farm.getFields().forEach(field -> field.setFarm(farm));
         return farmRepository.save(farm);
     }
