@@ -2,11 +2,17 @@ package me.elhakimi.citronix.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Tree {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,23 +21,23 @@ public class Tree {
     @NotNull
     private LocalDate plantingDate;
 
-    @Transient
-    private int age;
-
     @ManyToOne
     @JoinColumn(name = "field_id")
     private Field field;
 
-    @PostLoad
-    public void calculateAge() {
-        this.age = Period.between(this.plantingDate, LocalDate.now()).getYears();
+
+    public int getAge() {
+        return plantingDate != null ? Period.between(plantingDate, LocalDate.now()).getYears() : 0;
     }
 
+
     public double getProductivity() {
+        int age = getAge();
         if (age < 3) return 2.5;
         if (age <= 10) return 12.0;
         if (age <= 20) return 20.0;
         return 0.0;
     }
-}
 
+
+}

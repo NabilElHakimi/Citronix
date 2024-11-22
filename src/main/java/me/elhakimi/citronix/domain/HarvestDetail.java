@@ -2,8 +2,14 @@ package me.elhakimi.citronix.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.*;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class HarvestDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +25,5 @@ public class HarvestDetail {
     @ManyToOne
     @JoinColumn(name = "tree_id")
     private Tree tree;
+
 }
