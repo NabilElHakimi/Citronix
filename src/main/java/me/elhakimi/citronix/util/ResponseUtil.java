@@ -33,6 +33,14 @@ public class ResponseUtil {
         return createResponse(name + " retrieved successfully.", HttpStatus.OK , object);
     }
 
+    public static ResponseEntity<Object> mustBeNullException(String name) {
+        return createResponse(name + " must be null.", HttpStatus.BAD_REQUEST, null);
+    }
+
+    public static ResponseEntity<Object> mustBeNotNullException(String name) {
+        return createResponse(name + " must be Not null.", HttpStatus.BAD_REQUEST, null);
+    }
+
     private static ResponseEntity<Object> createResponse(String message, HttpStatus status, Object data) {
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDateTime.now());
