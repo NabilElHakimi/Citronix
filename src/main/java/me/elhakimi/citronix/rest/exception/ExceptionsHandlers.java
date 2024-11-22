@@ -63,4 +63,5 @@ public class ExceptionsHandlers {
         response.put("message", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
 }

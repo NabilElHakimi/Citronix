@@ -9,10 +9,7 @@ import me.elhakimi.citronix.rest.vm.mapper.SaleVmMapper;
 import me.elhakimi.citronix.service.impl.SaleServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/sale")
@@ -34,16 +31,26 @@ public class SaleController {
 
     }
 
-    @PostMapping("/update")
+    @PutMapping
     public ResponseEntity<Object> update(@RequestBody SaleVm saleVm) {
 
         if(saleVm.getId() == null) {
-            return ResponseUtil.mustBeNullException("Id");
+            return ResponseUtil.mustBeNotNullException("Id");
         }
 
         Sale updatedSale = saleService.update(saleVmMapper.toSale(saleVm));
         return ResponseUtil.updateSuccessfully("Sale" , saleVmMapper.toSaleVm(updatedSale));
 
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> findById(@PathVariable Long id) {
+        Sale sale = saleService.findById(id);
+        if(sale == null) {
+            return ResponseUtil.notFound("Sale");
+        }
+        return ResponseUtil.deleteSuccessfully("Sale");
+    }
+
 
 }

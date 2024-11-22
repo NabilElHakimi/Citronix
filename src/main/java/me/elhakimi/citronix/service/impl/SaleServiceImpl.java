@@ -28,12 +28,14 @@ public class SaleServiceImpl {
         return saleRepository.findById(id).orElse(null);
     }
 
-    public void delete(Long id) {
-        saleRepository.deleteById(id);
-    }
-
     public Sale update(Sale sale) {
+
+        Harvest harvest = harvestService.findById(sale.getHarvest().getId());
+        if (harvest == null) throw new NotFoundException("Harvest not found");
+        sale.setHarvest(harvest);
+
         return saleRepository.save(sale);
     }
+
 
 }
