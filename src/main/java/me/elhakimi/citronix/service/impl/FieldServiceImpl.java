@@ -32,6 +32,14 @@ public class FieldServiceImpl {
     }
 
     public Field updateField(Field field) {
+
+        Farm farm = farmService.getFarm(field.getFarm().getId());
+        if(farm != null){
+            double fieldsSum = fieldRepository.searchAllByFarm(farm).stream().mapToDouble(Field::getArea).sum();
+            if((fieldsSum+field.getArea()) > farm.getArea())  throw new DontHaveAreaException("Field");
+            field.setFarm(farm);
+            return fieldRepository.save(field);
+        }
         return fieldRepository.save(field);
     }
 
