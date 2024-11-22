@@ -14,7 +14,6 @@ public class FieldVm {
     private Long id;
     private String name;
     private double area;
-
     private Long farmId;
 
     @JsonIgnore
