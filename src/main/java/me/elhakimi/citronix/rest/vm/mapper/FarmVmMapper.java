@@ -13,7 +13,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FarmVmMapper {
 
+    @Mapping(target = "fields.farmId", ignore = true)
     FarmVm toFarmVm(Farm farm);
+
     Farm toFarm(FarmVm farmVm);
     List<Farm> toFarmList(List<FarmVm> farmVmList);
     List<FarmVm> toFarmVmList(List<Farm> farmList);
