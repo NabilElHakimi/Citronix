@@ -22,5 +22,5 @@ Assurez-vous d’avoir installé :
 
 1. Clonez ce dépôt :
    ```bash
-   git clone https://github.com/votre-utilisateur/Citronix.git
+   git clone https://github.com/NabilElHakimi/Citronix.git
    cd Citronix
