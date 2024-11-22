@@ -41,4 +41,41 @@ public class HarvestDetailController {
         return ResponseUtil.saveFailed("Harvest Detail");
     }
 
+
+    @PutMapping
+    public ResponseEntity<Object> update(@Valid @RequestBody HarvestDetailVm harvestDetailVm) {
+
+        if (harvestDetailVm.getQuantity() < 1) {
+            return ResponseUtil.notFound("Tree Quantity");
+        }
+        if(harvestDetailVm.getHarvestId() == null) {
+            return ResponseUtil.notFound("Harvest");
+        }
+        if(harvestDetailVm.getTreeId() == null) {
+            return ResponseUtil.notFound("Tree");
+        }
+
+        HarvestDetail harvestDetail = harvestDetailVmMapper.toHarvestDetail(harvestDetailVm);
+        if(harvestDetailService.update(harvestDetail) != null) {
+            return ResponseUtil.updateSuccessfully("Harvest Detail" , harvestDetailVmMapper.toHarvestDetailVm(harvestDetail));
+        }
+        return ResponseUtil.updateSuccessfully("Harvest Detail" , harvestDetailVmMapper.toHarvestDetailVm(harvestDetail));
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> findById(@PathVariable Long id) {
+        HarvestDetail harvestDetail = harvestDetailService.findById(id);
+        if(harvestDetail != null) {
+            return ResponseUtil.getSuccessfully("Harvest Detail" , harvestDetailVmMapper.toHarvestDetailVm(harvestDetail));
+        }
+        return ResponseUtil.notFound("Harvest Detail");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
+        harvestDetailService.delete(id);
+        return ResponseUtil.deleteSuccessfully("Harvest Detail");
+    }
+
 }

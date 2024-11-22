@@ -33,9 +33,22 @@ public class HarvestDetailServiceImpl {
         return harvestDetailRepository.save(harvestDetail);
     }
 
+
     public HarvestDetail update(HarvestDetail harvestDetail) {
 
+        if(harvestDetail.getId() == null) throw new NotFoundException("Harvest Detail");
+
+        Harvest harvest = harvestService.findById(harvestDetail.getHarvest().getId());
+
+        if (harvest == null)    throw new NotFoundException("Harvest");
+
+        Tree tree = treeService.getTree(harvestDetail.getTree().getId());
+        if (tree == null)    throw new NotFoundException("Tree");
+
+        if(harvestDetail.getQuantity() < 1  ) throw new NotFoundException("Tree Quantity");
+
         return harvestDetailRepository.save(harvestDetail);
+
     }
 
     public HarvestDetail findById(Long id) {
