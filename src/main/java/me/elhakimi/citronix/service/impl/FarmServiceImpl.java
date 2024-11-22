@@ -8,6 +8,8 @@ import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import me.elhakimi.citronix.service.CrudService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,8 +23,11 @@ public class FarmServiceImpl implements CrudService<Farm> {
 
 
 
-    public List<Farm> getFarms() {
-        return farmRepository.findAll();
+    @Override
+    public Page<Farm> findAll(int page, int size) {
+        page = page < 1 ? 0 : page - 1;
+
+        return farmRepository.findAll(PageRequest.of(page, size));
     }
 
     @Override

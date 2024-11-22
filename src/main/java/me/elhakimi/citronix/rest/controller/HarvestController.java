@@ -44,7 +44,6 @@ public class HarvestController {
         @GetMapping
         public Page<HarvestVm> findAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
 
-
             return harvestService.findAll(page, size).map(harvestVmMapper::toHarvestVm);
         }
 

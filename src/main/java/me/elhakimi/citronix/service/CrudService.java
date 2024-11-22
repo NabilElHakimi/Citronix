@@ -1,8 +1,11 @@
 package me.elhakimi.citronix.service;
 
+import org.springframework.data.domain.Page;
+
 public interface CrudService<T> {
-    public T save(T object);
-    public T findById(Long id);
-    public T update(T object);
-    public void delete(Long id);
+     T save(T object);
+     T findById(Long id);
+     T update(T object);
+     void delete(Long id);
+     Page<T> findAll(int page, int size);
 }

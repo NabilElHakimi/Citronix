@@ -6,6 +6,7 @@ import me.elhakimi.citronix.rest.vm.FarmVm;
 import me.elhakimi.citronix.rest.vm.TreeVm;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -16,5 +17,6 @@ public interface FarmVmMapper {
     Farm toFarm(FarmVm farmVm);
     List<Farm> toFarmList(List<FarmVm> farmVmList);
     List<FarmVm> toFarmVmList(List<Farm> farmList);
+
 
 }

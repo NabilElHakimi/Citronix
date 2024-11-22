@@ -50,7 +50,7 @@ public class SaleController {
         if(sale == null) {
             return ResponseUtil.notFound("Sale");
         }
-        saleService.delete(sale);
+        saleService.delete(sale.getId());
         return ResponseUtil.deleteSuccessfully("Sale");
     }
 
@@ -62,7 +62,7 @@ public class SaleController {
         if(saleToDelete == null) {
             return ResponseUtil.notFound("Sale");
         }
-        saleService.delete(saleToDelete);
+        saleService.delete(saleToDelete.getId());
 
         return ResponseUtil.deleteSuccessfully("Sale");
     }

@@ -9,6 +9,7 @@ import me.elhakimi.citronix.rest.vm.FarmVm;
 import me.elhakimi.citronix.rest.vm.mapper.FarmVmMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
 import me.elhakimi.citronix.util.ResponseUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,11 @@ public class FarmController {
     private final FarmVmMapper farmVmMapper;
 
     @GetMapping
-    public ResponseEntity<Object> getFarm() {
-        return ResponseEntity.ok(farmVmMapper.toFarmVmList(farmService.getFarms()));
+
+    public ResponseEntity<Object> findAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size) {
+        Page<FarmVm> farmVmPage = farmService.findAll(page, size).map(farmVmMapper::toFarmVm);
+        return ResponseEntity.ok(farmVmPage);
+
     }
 
     @PostMapping

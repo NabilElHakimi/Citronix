@@ -8,6 +8,7 @@ import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
 import me.elhakimi.citronix.service.CrudService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -62,7 +63,10 @@ public class FieldServiceImpl implements CrudService<Field> {
 
     }
 
-
+    @Override
+    public Page<Field> findAll(int page, int size) {
+        return null;
+    }
 
 
 }

@@ -7,6 +7,7 @@ import me.elhakimi.citronix.domain.Harvest;
 import me.elhakimi.citronix.domain.Sale;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import me.elhakimi.citronix.service.CrudService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,6 +45,11 @@ public class SaleServiceImpl implements CrudService<Sale> {
     @Override
     public void delete(Long id) {
         saleRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Sale> findAll(int page, int size) {
+        return null;
     }
 
 
