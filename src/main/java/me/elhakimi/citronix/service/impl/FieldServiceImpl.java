@@ -7,19 +7,17 @@ import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
-import me.elhakimi.citronix.service.CrudService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class FieldServiceImpl implements CrudService<Field> {
+public class FieldServiceImpl {
 
     private final FieldRepository fieldRepository;
     private final FarmServiceImpl farmService ;
 
-    @Override
+
     public Field save(Field field) {
 
         Farm farm = farmService.findById(field.getFarm().getId());
@@ -32,12 +30,12 @@ public class FieldServiceImpl implements CrudService<Field> {
         return null ;
     }
 
-    @Override
+
     public Field findById(Long fieldId) {
         return fieldRepository.findById(fieldId).orElse(null);
     }
 
-    @Override
+
     public Field update(Field field) {
 
         if(field.getId() == null || field.getId() < 1 ) throw new mustBeNotNullException("Field");
@@ -55,7 +53,7 @@ public class FieldServiceImpl implements CrudService<Field> {
         return fieldRepository.save(field);
     }
 
-    @Override
+
     public void delete(Long fieldId) {
         if(fieldId == null || fieldId < 1 ) throw new mustBeNotNullException("Field");
 
@@ -63,7 +61,7 @@ public class FieldServiceImpl implements CrudService<Field> {
 
     }
 
-    @Override
+
     public Page<Field> findAll(int page, int size) {
         return null;
     }

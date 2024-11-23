@@ -6,7 +6,6 @@ import me.elhakimi.citronix.Repository.TreeRepository;
 import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
-import me.elhakimi.citronix.service.CrudService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

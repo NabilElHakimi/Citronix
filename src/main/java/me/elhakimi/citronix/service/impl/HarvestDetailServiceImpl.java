@@ -7,7 +7,6 @@ import me.elhakimi.citronix.domain.HarvestDetail;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
-import me.elhakimi.citronix.service.CrudService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,13 +15,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class HarvestDetailServiceImpl implements CrudService<HarvestDetail> {
+public class HarvestDetailServiceImpl  {
 
     private final HarvestDetailRepository harvestDetailRepository;
     private final HarvestServiceImpl harvestService;
     private final TreeServiceImpl treeService;
 
-    @Override
+
     public HarvestDetail save(HarvestDetail harvestDetail) {
 
         Harvest harvest = harvestService.findById(harvestDetail.getHarvest().getId());
@@ -39,7 +38,7 @@ public class HarvestDetailServiceImpl implements CrudService<HarvestDetail> {
 
         return harvestDetailRepository.save(harvestDetail);
     }
-    @Override
+
     public HarvestDetail update(HarvestDetail harvestDetail) {
 
         if(harvestDetail.getId() == null) throw new NotFoundException("Harvest Detail");
@@ -56,11 +55,11 @@ public class HarvestDetailServiceImpl implements CrudService<HarvestDetail> {
         return harvestDetailRepository.save(harvestDetail);
 
     }
-    @Override
+
     public HarvestDetail findById(Long id) {
         return harvestDetailRepository.findById(id).orElse(null);
     }
-    @Override
+
     public void delete(Long id) {
         harvestDetailRepository.deleteById(id);
     }
