@@ -6,6 +6,7 @@ import me.elhakimi.citronix.Repository.HarvestRepository;
 import me.elhakimi.citronix.domain.Harvest;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import me.elhakimi.citronix.rest.exception.exceptions.YouCanOnlyHarvestOncePerSeason;
+import me.elhakimi.citronix.service.interfaces.HarvestService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class HarvestServiceImpl {
+public class HarvestServiceImpl implements HarvestService {
 
     private final HarvestRepository harvestRepository;
 

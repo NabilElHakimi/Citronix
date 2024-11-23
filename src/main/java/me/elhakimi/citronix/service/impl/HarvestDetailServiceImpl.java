@@ -7,6 +7,7 @@ import me.elhakimi.citronix.domain.HarvestDetail;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.service.interfaces.HarvestDetailService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class HarvestDetailServiceImpl  {
+public class HarvestDetailServiceImpl  implements HarvestDetailService {
 
     private final HarvestDetailRepository harvestDetailRepository;
     private final HarvestServiceImpl harvestService;

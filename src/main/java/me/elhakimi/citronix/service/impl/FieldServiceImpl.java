@@ -7,12 +7,13 @@ import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
+import me.elhakimi.citronix.service.interfaces.FieldService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class FieldServiceImpl {
+public class FieldServiceImpl implements FieldService {
 
     private final FieldRepository fieldRepository;
     private final FarmServiceImpl farmService ;

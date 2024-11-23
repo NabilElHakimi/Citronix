@@ -7,6 +7,7 @@ import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
+import me.elhakimi.citronix.service.interfaces.FarmService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class FarmServiceImpl  {
+public class FarmServiceImpl  implements FarmService {
 
     private final FarmRepository farmRepository;
 

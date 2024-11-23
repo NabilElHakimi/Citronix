@@ -6,12 +6,13 @@ import me.elhakimi.citronix.Repository.SaleRepository;
 import me.elhakimi.citronix.domain.Harvest;
 import me.elhakimi.citronix.domain.Sale;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.service.interfaces.SaleService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class SaleServiceImpl  {
+public class SaleServiceImpl  implements SaleService {
 
     private final SaleRepository saleRepository;
     private final HarvestServiceImpl harvestService;

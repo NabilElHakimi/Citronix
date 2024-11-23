@@ -6,14 +6,18 @@ import me.elhakimi.citronix.Repository.TreeRepository;
 import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.service.interfaces.TreeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
-public class TreeServiceImpl implements CrudService<Tree> {
+public class TreeServiceImpl implements TreeService {
 
     private final TreeRepository treeRepository;
     private final  FieldServiceImpl fieldService;
@@ -85,5 +89,6 @@ public class TreeServiceImpl implements CrudService<Tree> {
         return treeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Tree"));
     }
+
 
 }
