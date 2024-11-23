@@ -8,6 +8,7 @@ import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import me.elhakimi.citronix.rest.vm.FarmVm;
 import me.elhakimi.citronix.rest.vm.mapper.FarmVmMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
+import me.elhakimi.citronix.service.interfaces.FarmService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,7 +24,7 @@ import java.time.LocalDate;
 public class FarmController {
 
 
-    private final FarmServiceImpl farmService;
+    private final FarmService farmService;
     private final FarmVmMapper farmVmMapper;
 
 

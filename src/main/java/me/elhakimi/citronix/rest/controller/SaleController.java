@@ -8,6 +8,7 @@ import me.elhakimi.citronix.domain.Sale;
 import me.elhakimi.citronix.rest.vm.SaleVm;
 import me.elhakimi.citronix.rest.vm.mapper.SaleVmMapper;
 import me.elhakimi.citronix.service.impl.SaleServiceImpl;
+import me.elhakimi.citronix.service.interfaces.SaleService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class SaleController {
 
-    private final SaleServiceImpl saleService;
+    private final SaleService saleService;
     private final SaleVmMapper saleVmMapper;
 
     @PostMapping

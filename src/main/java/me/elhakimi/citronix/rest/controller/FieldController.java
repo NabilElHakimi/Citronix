@@ -8,6 +8,7 @@ import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.rest.vm.FieldVm;
 import me.elhakimi.citronix.rest.vm.mapper.FieldVmMapper;
 import me.elhakimi.citronix.service.impl.FieldServiceImpl;
+import me.elhakimi.citronix.service.interfaces.FieldService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class FieldController {
 
-    private final FieldServiceImpl fieldService;
+    private final FieldService fieldService;
     private FieldVmMapper fieldVmMapper;
 
     @PostMapping
