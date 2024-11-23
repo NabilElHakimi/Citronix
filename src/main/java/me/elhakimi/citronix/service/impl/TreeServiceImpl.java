@@ -6,6 +6,7 @@ import me.elhakimi.citronix.Repository.TreeRepository;
 import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.rest.exception.exceptions.YouCantAddMoreTreesToThisField;
 import me.elhakimi.citronix.service.interfaces.TreeService;
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.data.domain.Page;
@@ -37,10 +38,12 @@ public class TreeServiceImpl implements TreeService {
             throw new NotFoundException("Field");
         }
 
-        double treesNumber = field.getFarm().getArea()/100 ;
+        double treesNumber = field.getArea()/100 ;
+
         if(field.getTrees().size() >= treesNumber) {
-            throw new MessageDescriptorFormatException("You can't add more trees to this field");
+            throw new YouCantAddMoreTreesToThisField();
         }
+
         tree.setField(field);
         return treeRepository.save(tree);
     }
@@ -66,9 +69,10 @@ public class TreeServiceImpl implements TreeService {
             throw new NotFoundException("Field");
         }
 
-        double treesNumber = field.getFarm().getArea()/100 ;
+        double treesNumber = field.getArea()/100 ;
+
         if(field.getTrees().size() >= treesNumber) {
-            throw new MessageDescriptorFormatException("You can't add more trees to this field");
+            throw new YouCantAddMoreTreesToThisField();
         }
 
         tree.setField(field);
