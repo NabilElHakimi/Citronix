@@ -23,10 +23,7 @@ public class FieldServiceImpl implements FieldService {
 
         Farm farm = farmService.findById(field.getFarm().getId());
         if(farm != null){
-            double fieldsSum = fieldRepository.searchAllByFarm(farm).stream().mapToDouble(Field::getArea).sum();
-            if((fieldsSum+field.getArea()) > farm.getArea())  throw new DontHaveAreaException("Field");
-            field.setFarm(farm);
-            return fieldRepository.save(field);
+                if(CheckFieldArea(farm,field)) return fieldRepository.save(field);
         }
         return null ;
     }
@@ -46,10 +43,7 @@ public class FieldServiceImpl implements FieldService {
         Farm farm = farmService.findById(field.getFarm().getId());
 
         if(farm != null){
-            double fieldsSum = fieldRepository.searchAllByFarm(farm).stream().mapToDouble(Field::getArea).sum();
-            if((fieldsSum+field.getArea()) > farm.getArea())  throw new DontHaveAreaException("Field");
-            field.setFarm(farm);
-            return fieldRepository.save(field);
+            if(CheckFieldArea(farm,field))   return fieldRepository.save(field);
         }
         return fieldRepository.save(field);
     }
@@ -67,6 +61,15 @@ public class FieldServiceImpl implements FieldService {
         return null;
     }
 
+
+    private boolean CheckFieldArea(Farm farm, Field field) {
+
+        if(farm.getFields().size() == 10 ) throw new DontHaveAreaException("Field");
+        if(field.getArea() > farm.getArea()/2 ) throw new DontHaveAreaException("Field");
+        double fieldsSum = fieldRepository.searchAllByFarm(farm).stream().mapToDouble(Field::getArea).sum();
+        if((fieldsSum+field.getArea()) > farm.getArea())  throw new DontHaveAreaException("Field");
+        return true;
+    }
 
 }
 
