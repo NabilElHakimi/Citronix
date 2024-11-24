@@ -7,7 +7,9 @@ import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
+import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import me.elhakimi.citronix.service.interfaces.FieldService;
+import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class FieldServiceImpl implements FieldService {
 
 
     public Field save(Field field) {
+
+        if(field.getId() != null) throw new mustBeNullException("Field");
+
 
         Farm farm = farmService.findById(field.getFarm().getId());
         if(farm != null){
@@ -65,6 +70,7 @@ public class FieldServiceImpl implements FieldService {
 
         if(farm.getFields().size() == 10 ) throw new DontHaveAreaException("Field");
         if(field.getArea() > farm.getArea()/2 ) throw new DontHaveAreaException("Field");
+        if(field.getArea() < 1000 ) throw new MessageDescriptorFormatException("Field area must be at least 1000 m²");
         double fieldsSum = fieldRepository.searchAllByFarm(farm).stream().mapToDouble(Field::getArea).sum();
         if((fieldsSum+field.getArea()) > farm.getArea())  throw new DontHaveAreaException("Field");
         return true;
