@@ -83,7 +83,6 @@ class FieldServiceImplTest {
         verify(fieldRepository, never()).save(any());
     }
 
-
     @Test
     void save_ShouldThrowException_WhenFieldAreaExceedsFarmLimit() {
         Farm farm = new Farm();
@@ -118,7 +117,6 @@ class FieldServiceImplTest {
         assertThrows(DontHaveAreaException.class, () -> fieldService.save(newField));
         verify(fieldRepository, never()).save(any());
     }
-
 
     @Test
     void save_ShouldThrowException_WhenFieldAreaIsBelowMinimum() {
@@ -157,4 +155,21 @@ class FieldServiceImplTest {
         verify(fieldRepository, never()).save(any());
     }
 
+    @Test
+    void save_ShouldTrowException_WhenFieldIdIsNotNull(){
+        Farm farm = new Farm();
+        farm.setId(1L);
+        farm.setArea(5000.0);
+
+        Field existingField = new Field();
+        existingField.setArea(4000.0);
+
+        Field newField = new Field();
+        newField.setFarm(farm);
+        newField.setArea(2000.0);
+        newField.setId(1L);
+
+        assertThrows(mustBeNullException.class, () -> fieldService.save(newField));
+
+    }
 }
