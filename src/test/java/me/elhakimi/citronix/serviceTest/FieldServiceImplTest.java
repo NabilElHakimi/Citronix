@@ -61,18 +61,15 @@ class FieldServiceImplTest {
 
     @Test
     void save_ShouldThrowException_WhenFieldIdIsNotNull() {
-        // Arrange
         Field field = new Field();
-        field.setId(1L); // Non-null ID
+        field.setId(1L);
 
-        // Act & Assert
         assertThrows(mustBeNullException.class, () -> fieldService.save(field));
         verify(fieldRepository, never()).save(any());
     }
 
     @Test
     void save_ShouldReturnNull_WhenFarmDoesNotExist() {
-        // Arrange
         Field field = new Field();
         Farm farm = new Farm();
         farm.setId(1L);
@@ -80,10 +77,8 @@ class FieldServiceImplTest {
 
         when(farmService.findById(farm.getId())).thenReturn(null);
 
-        // Act
         Field result = fieldService.save(field);
 
-        // Assert
         assertNull(result);
         verify(fieldRepository, never()).save(any());
     }
@@ -91,24 +86,21 @@ class FieldServiceImplTest {
 
     @Test
     void save_ShouldThrowException_WhenFieldAreaExceedsFarmLimit() {
-        // Arrange
         Farm farm = new Farm();
         farm.setId(1L);
         farm.setArea(5000.0);
 
         Field field = new Field();
         field.setFarm(farm);
-        field.setArea(3000.0); // More than half of 5000.0
+        field.setArea(3000.0);
 
         when(farmService.findById(farm.getId())).thenReturn(farm);
 
-        // Act & Assert
         assertThrows(DontHaveAreaException.class, () -> fieldService.save(field));
         verify(fieldRepository, never()).save(any());
     }
     @Test
     void save_ShouldThrowException_WhenTotalFieldAreaExceedsFarmCapacity() {
-        // Arrange
         Farm farm = new Farm();
         farm.setId(1L);
         farm.setArea(5000.0);
@@ -118,12 +110,11 @@ class FieldServiceImplTest {
 
         Field newField = new Field();
         newField.setFarm(farm);
-        newField.setArea(2000.0); // Combined area exceeds farm capacity
+        newField.setArea(2000.0);
 
         when(farmService.findById(farm.getId())).thenReturn(farm);
         when(fieldRepository.searchAllByFarm(farm)).thenReturn(Collections.singletonList(existingField));
 
-        // Act & Assert
         assertThrows(DontHaveAreaException.class, () -> fieldService.save(newField));
         verify(fieldRepository, never()).save(any());
     }
@@ -131,25 +122,22 @@ class FieldServiceImplTest {
 
     @Test
     void save_ShouldThrowException_WhenFieldAreaIsBelowMinimum() {
-        // Arrange
         Farm farm = new Farm();
         farm.setId(1L);
         farm.setArea(5000.0);
 
         Field field = new Field();
         field.setFarm(farm);
-        field.setArea(500.0); // Less than 1000 m²
+        field.setArea(500.0);
 
         when(farmService.findById(farm.getId())).thenReturn(farm);
 
-        // Act & Assert
         assertThrows(MessageDescriptorFormatException.class, () -> fieldService.save(field));
         verify(fieldRepository, never()).save(any());
     }
 
     @Test
     void save_ShouldThrowException_WhenFarmHasMaximumFields() {
-        // Arrange
         Farm farm = new Farm();
         farm.setId(1L);
         farm.setArea(5000.0);
@@ -165,7 +153,6 @@ class FieldServiceImplTest {
         when(farmService.findById(farm.getId())).thenReturn(farm);
         when(fieldRepository.searchAllByFarm(farm)).thenReturn(existingFields);
 
-        // Act & Assert
         assertThrows(DontHaveAreaException.class, () -> fieldService.save(field));
         verify(fieldRepository, never()).save(any());
     }
