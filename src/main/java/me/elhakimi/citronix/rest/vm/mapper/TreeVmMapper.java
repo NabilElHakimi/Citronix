@@ -12,12 +12,13 @@ public interface TreeVmMapper {
 
 //    TreeVmMapper INSTANCE = Mappers.getMapper(TreeVmMapper.class);
 
-    @Mapping(target = "field.id", source = "field.id")
-    @Mapping(target = "field.name", source = "field.name")
-    @Mapping(target = "field.area", source = "field.area")
-    @Mapping(target = "field.trees", ignore = true)
+    @Mapping(target = "fieldId", source = "field.id")
+//    @Mapping(target = "field.name", source = "field.name")
+//    @Mapping(target = "field.area", source = "field.area")
+//    @Mapping(target = "field.trees", ignore = true)
     TreeVm toTreeVm(Tree tree);
 
-    @Mapping(target = "field", ignore = true)
+//    @Mapping(target = "field", ignore = true)
+    @Mapping(source = "fieldId", target = "field.id")
     Tree toTree(TreeVm treeVm);
 }

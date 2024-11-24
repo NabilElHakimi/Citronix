@@ -10,7 +10,7 @@
     public class TreeVm {
 
         private Long id;
-        private FieldVm field;
+        private Long fieldId;
         private LocalDate plantingDate;
         private int age;
         private double productivity ;

@@ -9,6 +9,7 @@ import me.elhakimi.citronix.rest.vm.HarvestDetailVm;
 import me.elhakimi.citronix.rest.vm.HarvestVm;
 import me.elhakimi.citronix.rest.vm.mapper.HarvestDetailVmMapper;
 import me.elhakimi.citronix.service.impl.HarvestDetailServiceImpl;
+import me.elhakimi.citronix.service.interfaces.HarvestDetailService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class HarvestDetailController {
 
-    private final HarvestDetailServiceImpl harvestDetailService;
+    private final HarvestDetailService harvestDetailService;
     private final HarvestDetailVmMapper harvestDetailVmMapper;
 
     @PostMapping

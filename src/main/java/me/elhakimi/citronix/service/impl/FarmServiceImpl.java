@@ -7,7 +7,7 @@ import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
-import me.elhakimi.citronix.service.CrudService;
+import me.elhakimi.citronix.service.interfaces.FarmService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,20 +17,18 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class FarmServiceImpl implements CrudService<Farm> {
+public class FarmServiceImpl  implements FarmService {
 
     private final FarmRepository farmRepository;
 
 
 
-    @Override
     public Page<Farm> findAll(int page, int size) {
         page = page < 1 ? 0 : page - 1;
 
         return farmRepository.findAll(PageRequest.of(page, size));
     }
 
-    @Override
     public Farm save(Farm farm) {
 
         double areaSum = farm.getFields().stream().mapToDouble(Field::getArea).sum();
@@ -40,7 +38,6 @@ public class FarmServiceImpl implements CrudService<Farm> {
     }
 
 
-    @Override
     public Farm findById(Long id) {
         return farmRepository.findById(id).orElse(null);
     }
@@ -49,7 +46,6 @@ public class FarmServiceImpl implements CrudService<Farm> {
         farmRepository.deleteById(id);
     }
 
-    @Override
     public Farm update(Farm farm) {
         if(farm.getId() == null) throw new mustBeNullException("Id");
         return farmRepository.save(farm);

@@ -7,6 +7,7 @@ import me.elhakimi.citronix.domain.Harvest;
 import me.elhakimi.citronix.rest.vm.HarvestVm;
 import me.elhakimi.citronix.rest.vm.mapper.HarvestVmMapper;
 import me.elhakimi.citronix.service.impl.HarvestServiceImpl;
+import me.elhakimi.citronix.service.interfaces.HarvestService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class HarvestController {
 
-        private final HarvestServiceImpl harvestService;
+        private final HarvestService harvestService;
         private final HarvestVmMapper harvestVmMapper;
 
         @PostMapping

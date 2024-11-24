@@ -8,23 +8,28 @@ import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
 import me.elhakimi.citronix.rest.vm.FarmVm;
 import me.elhakimi.citronix.rest.vm.mapper.FarmVmMapper;
 import me.elhakimi.citronix.service.impl.FarmServiceImpl;
+import me.elhakimi.citronix.service.interfaces.FarmService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/farm")
 @AllArgsConstructor
+
 public class FarmController {
 
-    private final FarmServiceImpl farmService;
+
+    private final FarmService farmService;
     private final FarmVmMapper farmVmMapper;
 
-    @GetMapping
 
+
+    @GetMapping
     public ResponseEntity<Object> findAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size) {
         Page<FarmVm> farmVmPage = farmService.findAll(page, size).map(farmVmMapper::toFarmVm);
         return ResponseEntity.ok(farmVmPage);

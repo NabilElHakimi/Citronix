@@ -8,6 +8,7 @@ import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.vm.TreeVm;
 import me.elhakimi.citronix.rest.vm.mapper.TreeVmMapper;
 import me.elhakimi.citronix.service.impl.TreeServiceImpl;
+import me.elhakimi.citronix.service.interfaces.TreeService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TreeController {
 
-    private final TreeServiceImpl treeService;
+    private final TreeService treeService;
     private final TreeVmMapper treeVmMapper;
 
     @PostMapping
@@ -28,12 +29,12 @@ public class TreeController {
 
         if (treeVm.getId() != null) return ResponseUtil.saveFailed("Tree");
 
-        if (treeVm.getField() == null || treeVm.getField().getId() == null)
+        if (treeVm.getFieldId() == null || treeVm.getFieldId() <= 0)
             return ResponseUtil.saveFailed("Tree: Field");
 
         Tree tree = treeVmMapper.toTree(treeVm);
         Field field = new Field();
-        field.setId(treeVm.getField().getId());
+        field.setId(treeVm.getFieldId());
         tree.setField(field);
 
         Tree savedTree = treeService.save(tree);
@@ -51,12 +52,12 @@ public class TreeController {
 
         if (treeVm.getId() == null) return ResponseUtil.notFound("Tree");
 
-        if (treeVm.getField() == null || treeVm.getField().getId() == null)
+        if (treeVm.getFieldId() == null || treeVm.getFieldId() <= 0)
             return ResponseUtil.notFound("Tree: Field");
 
         Tree tree = treeVmMapper.toTree(treeVm);
         Field field = new Field();
-        field.setId(treeVm.getField().getId());
+        field.setId(treeVm.getFieldId() );
         tree.setField(field);
 
         Tree updatedTree = treeService.save(tree);

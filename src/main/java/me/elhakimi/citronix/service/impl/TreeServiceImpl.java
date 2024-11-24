@@ -6,7 +6,12 @@ import me.elhakimi.citronix.Repository.TreeRepository;
 import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
-import me.elhakimi.citronix.service.CrudService;
+import me.elhakimi.citronix.rest.exception.exceptions.YouCantAddMoreTreesToThisField;
+import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
+import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
+import me.elhakimi.citronix.service.interfaces.TreeService;
+import me.elhakimi.citronix.util.CheckDateForPlantation;
+import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class TreeServiceImpl implements CrudService<Tree> {
+public class TreeServiceImpl implements TreeService {
 
     private final TreeRepository treeRepository;
     private final  FieldServiceImpl fieldService;
@@ -22,18 +27,19 @@ public class TreeServiceImpl implements CrudService<Tree> {
     @Override
     public Tree save(Tree tree) {
 
-        if(tree.getId() != null) {
-            throw new NotFoundException("Tree");
+        if(tree.getId() != null) throw new mustBeNullException("Tree");
+
+        if(tree.getField() == null)      throw new NotFoundException("Field");
+
+        if (!CheckDateForPlantation.CheckDateIfBetweenMarshAndMai(tree.getPlantingDate())) {
+            throw new MessageDescriptorFormatException("You can only plant trees between March and May");
         }
 
-        if(tree.getField() == null) {
-            throw new NotFoundException("Field");
-        }
+        Field field = checkFieldIfExist(tree.getField().getId());
 
-        Field field = fieldService.findById(tree.getField().getId()) ;
-        if (field == null) {
-            throw new NotFoundException("Field");
-        }
+        double treesNumber = field.getArea()/100 ;
+
+        if(field.getTrees().size() >= treesNumber)   throw new YouCantAddMoreTreesToThisField();
 
         tree.setField(field);
         return treeRepository.save(tree);
@@ -42,21 +48,23 @@ public class TreeServiceImpl implements CrudService<Tree> {
     @Override
     public Tree update(Tree tree) {
 
-        if(tree.getId() == null) {
-            throw new NotFoundException("Tree");
+        if(tree.getId() == null) throw new mustBeNotNullException("Tree");
+
+        if(!treeRepository.existsById(tree.getId())) throw new NotFoundException("Tree");
+
+        if (!CheckDateForPlantation.CheckDateIfBetweenMarshAndMai(tree.getPlantingDate())) {
+            throw new MessageDescriptorFormatException("You can only plant trees between March and May");
         }
 
-        if(!treeRepository.existsById(tree.getId())) {
-            throw new NotFoundException("Tree");
-        }
 
-        if(tree.getField() == null) {
-            throw new NotFoundException("Field");
-        }
+        if(tree.getField() == null) throw new NotFoundException("Field");
 
-        Field field = fieldService.findById(tree.getField().getId());
-        if (field == null) {
-            throw new NotFoundException("Field");
+        Field field = checkFieldIfExist(tree.getField().getId());
+
+        double treesNumber = field.getArea()/100 ;
+
+        if(field.getTrees().size() >= treesNumber) {
+            throw new YouCantAddMoreTreesToThisField();
         }
 
         tree.setField(field);
@@ -85,6 +93,13 @@ public class TreeServiceImpl implements CrudService<Tree> {
     public Tree findById(Long id) {
         return treeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Tree"));
+    }
+
+
+    private Field checkFieldIfExist(Long fieldId) {
+        Field field = fieldService.findById(fieldId) ;
+        if (field == null)  throw new NotFoundException("Field");
+        return field;
     }
 
 }
