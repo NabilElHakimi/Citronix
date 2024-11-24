@@ -28,7 +28,6 @@ public class FieldServiceImpl implements FieldService {
         return null ;
     }
 
-
     public Field findById(Long fieldId) {
         return fieldRepository.findById(fieldId).orElse(null);
     }
