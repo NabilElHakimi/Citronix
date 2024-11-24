@@ -7,6 +7,7 @@ import me.elhakimi.citronix.domain.HarvestDetail;
 import me.elhakimi.citronix.domain.Tree;
 import me.elhakimi.citronix.rest.exception.exceptions.DontHaveAreaException;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
+import me.elhakimi.citronix.rest.exception.exceptions.TheTreeAgeIsMoreThan20Years;
 import me.elhakimi.citronix.service.interfaces.HarvestDetailService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,10 +33,14 @@ public class HarvestDetailServiceImpl  implements HarvestDetailService {
         Tree tree = treeService.findById(harvestDetail.getTree().getId());
         if (tree == null)    throw new NotFoundException("Tree");
 
+        if(tree.getAge() > 20 ) throw new TheTreeAgeIsMoreThan20Years();
+
         double checkTotalQuantity = harvest.getDetails().stream().mapToDouble(HarvestDetail::getQuantity).sum();
         if (checkTotalQuantity + harvestDetail.getQuantity() > harvest.getTotalQuantity()) throw new DontHaveAreaException("Quantity");
 
         if(harvestDetail.getQuantity() < 1  ) throw new NotFoundException("Tree Quantity");
+
+
 
         return harvestDetailRepository.save(harvestDetail);
     }
