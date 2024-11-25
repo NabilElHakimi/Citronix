@@ -5,6 +5,8 @@ package me.elhakimi.citronix.rest.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Sale;
+import me.elhakimi.citronix.rest.vm.RequestVm.SaleRequest;
+import me.elhakimi.citronix.rest.vm.RequestVm.mapper.SaleRequestMapper;
 import me.elhakimi.citronix.rest.vm.SaleVm;
 import me.elhakimi.citronix.rest.vm.ResponseVm.mapper.SaleVmMapper;
 import me.elhakimi.citronix.service.interfaces.SaleService;
@@ -19,27 +21,28 @@ public class SaleController {
 
     private final SaleService saleService;
     private final SaleVmMapper saleVmMapper;
+    private final SaleRequestMapper saleRequestMapper ;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody @Valid  SaleVm saleVm) {
+    public ResponseEntity<Object> save(@RequestBody @Valid SaleRequest saleRequest) {
 
-        if(saleVm.getId() != null) {
+        if(saleRequest.getId() != null) {
             return ResponseUtil.mustBeNullException("Id");
         }
 
-        Sale savedSale = saleService.save(saleVmMapper.toSale(saleVm));
+        Sale savedSale = saleService.save(saleRequestMapper.toSale(saleRequest));
         return ResponseUtil.saveSuccessfully("Sale" , saleVmMapper.toSaleVm(savedSale));
 
     }
 
     @PutMapping
-    public ResponseEntity<Object> update(@RequestBody @Valid  SaleVm saleVm) {
+    public ResponseEntity<Object> update(@RequestBody @Valid SaleRequest saleRequest) {
 
-        if(saleVm.getId() == null) {
+        if(saleRequest.getId() == null) {
             return ResponseUtil.mustBeNotNullException("Id");
         }
 
-        Sale updatedSale = saleService.update(saleVmMapper.toSale(saleVm));
+        Sale updatedSale = saleService.update(saleRequestMapper.toSale(saleRequest));
         return ResponseUtil.updateSuccessfully("Sale" , saleVmMapper.toSaleVm(updatedSale));
 
     }
