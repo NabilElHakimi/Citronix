@@ -1,7 +1,7 @@
 package me.elhakimi.citronix.rest.vm.ResponseVm.mapper;
 
 import me.elhakimi.citronix.domain.Sale;
-import me.elhakimi.citronix.rest.vm.SaleVm;
+import me.elhakimi.citronix.rest.vm.ResponseVm.SaleResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -14,7 +14,7 @@ public interface SaleVmMapper {
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "client", target = "client")
     @Mapping(target = "harvest.id", source = "harvestId")
-    Sale toSale(SaleVm saleVm);
+    Sale toSale(SaleResponse saleResponse);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "saleDate", target = "saleDate")
@@ -22,6 +22,6 @@ public interface SaleVmMapper {
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "client", target = "client")
     @Mapping(source = "harvest.id", target = "harvestId")
-    SaleVm toSaleVm(Sale sale);
+    SaleResponse toSaleVm(Sale sale);
 
 }

@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Sale;
 import me.elhakimi.citronix.rest.vm.RequestVm.SaleRequest;
 import me.elhakimi.citronix.rest.vm.RequestVm.mapper.SaleRequestMapper;
-import me.elhakimi.citronix.rest.vm.SaleVm;
 import me.elhakimi.citronix.rest.vm.ResponseVm.mapper.SaleVmMapper;
 import me.elhakimi.citronix.service.interfaces.SaleService;
 import me.elhakimi.citronix.util.ResponseUtil;
