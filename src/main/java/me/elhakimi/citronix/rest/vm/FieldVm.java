@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
-import me.elhakimi.citronix.domain.Farm;
+import me.elhakimi.citronix.rest.vm.ResponseVm.TreeResponse;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class FieldVm {
     private Long farmId;
 
     @JsonIgnore
-    private List<TreeVm> trees = new ArrayList<>();
+    private List<TreeResponse> trees = new ArrayList<>();
 
 
 }

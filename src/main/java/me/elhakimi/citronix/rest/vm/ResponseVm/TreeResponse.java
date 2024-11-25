@@ -1,4 +1,4 @@
-    package me.elhakimi.citronix.rest.vm;
+    package me.elhakimi.citronix.rest.vm.ResponseVm;
 
     import lombok.Getter;
     import lombok.Setter;
@@ -7,10 +7,10 @@
 
     @Getter
     @Setter
-    public class TreeVm {
+    public class TreeResponse {
 
         private Long id;
-        private Long fieldId;
+        private String fieldName;
         private LocalDate plantingDate;
         private int age;
         private double productivity ;

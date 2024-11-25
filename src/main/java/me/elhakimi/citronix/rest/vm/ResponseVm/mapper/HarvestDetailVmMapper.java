@@ -1,4 +1,4 @@
-package me.elhakimi.citronix.rest.vm.mapper;
+package me.elhakimi.citronix.rest.vm.ResponseVm.mapper;
 
 import me.elhakimi.citronix.domain.Harvest;
 import me.elhakimi.citronix.domain.HarvestDetail;

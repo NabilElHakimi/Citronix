@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 
 import me.elhakimi.citronix.domain.Harvest;
 import me.elhakimi.citronix.rest.vm.HarvestVm;
-import me.elhakimi.citronix.rest.vm.mapper.HarvestVmMapper;
-import me.elhakimi.citronix.service.impl.HarvestServiceImpl;
+import me.elhakimi.citronix.rest.vm.ResponseVm.mapper.HarvestVmMapper;
 import me.elhakimi.citronix.service.interfaces.HarvestService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.data.domain.Page;
