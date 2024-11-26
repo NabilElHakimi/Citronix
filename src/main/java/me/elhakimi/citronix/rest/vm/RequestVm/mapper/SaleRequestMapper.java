@@ -1,29 +1,25 @@
-package me.elhakimi.citronix.rest.vm.mapper;
+package me.elhakimi.citronix.rest.vm.RequestVm.mapper;
 
 import me.elhakimi.citronix.domain.Sale;
-import me.elhakimi.citronix.domain.Tree;
-import me.elhakimi.citronix.rest.vm.SaleVm;
-import me.elhakimi.citronix.rest.vm.TreeVm;
+import me.elhakimi.citronix.rest.vm.RequestVm.SaleRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface SaleVmMapper {
+public interface SaleRequestMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "saleDate", target = "saleDate")
     @Mapping(source = "unitPrice", target = "unitPrice")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "client", target = "client")
-    @Mapping(target = "harvest.id", source = "harvestId")
-    Sale toSale(SaleVm saleVm);
+    Sale toSale(SaleRequest saleRequest);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "saleDate", target = "saleDate")
     @Mapping(source = "unitPrice", target = "unitPrice")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "client", target = "client")
-    @Mapping(source = "harvest.id", target = "harvestId")
-    SaleVm toSaleVm(Sale sale);
+    SaleRequest toSaleVm(Sale sale);
 
 }

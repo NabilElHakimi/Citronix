@@ -1,4 +1,4 @@
-package me.elhakimi.citronix.rest.vm;
+package me.elhakimi.citronix.rest.vm.RequestVm;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -8,9 +8,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
-public class SaleVm {
+ @Getter
+ @Setter
+public class SaleRequest {
 
     private Long id;
 
@@ -26,7 +26,6 @@ public class SaleVm {
     @NotBlank(message = "Client name must not be blank")
     private String client;
 
-    private Long harvestId;
-
     private double revenue;
+
 }

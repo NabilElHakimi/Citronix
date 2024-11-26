@@ -3,11 +3,11 @@ package me.elhakimi.citronix.rest.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import me.elhakimi.citronix.domain.Field;
 import me.elhakimi.citronix.domain.Tree;
-import me.elhakimi.citronix.rest.vm.TreeVm;
-import me.elhakimi.citronix.rest.vm.mapper.TreeVmMapper;
-import me.elhakimi.citronix.service.impl.TreeServiceImpl;
+import me.elhakimi.citronix.rest.vm.RequestVm.TreeRequest;
+import me.elhakimi.citronix.rest.vm.RequestVm.mapper.TreeRequestMapper;
+import me.elhakimi.citronix.rest.vm.ResponseVm.TreeResponse;
+import me.elhakimi.citronix.rest.vm.ResponseVm.mapper.TreeVmMapper;
 import me.elhakimi.citronix.service.interfaces.TreeService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.data.domain.Page;
@@ -23,19 +23,17 @@ public class TreeController {
 
     private final TreeService treeService;
     private final TreeVmMapper treeVmMapper;
+    private final TreeRequestMapper treeRequestMapper ;
 
     @PostMapping
-    public ResponseEntity<Object> save(@Valid @RequestBody TreeVm treeVm) {
+    public ResponseEntity<Object> save(@Valid @RequestBody TreeRequest treeRequest) {
 
-        if (treeVm.getId() != null) return ResponseUtil.saveFailed("Tree");
+        if (treeRequest.getId() != null) return ResponseUtil.saveFailed("Tree");
 
-        if (treeVm.getFieldId() == null || treeVm.getFieldId() <= 0)
+        if (treeRequest.getFieldId() == null || treeRequest.getFieldId() <= 0)
             return ResponseUtil.saveFailed("Tree: Field");
 
-        Tree tree = treeVmMapper.toTree(treeVm);
-        Field field = new Field();
-        field.setId(treeVm.getFieldId());
-        tree.setField(field);
+        Tree tree = treeRequestMapper.toTree(treeRequest);
 
         Tree savedTree = treeService.save(tree);
 
@@ -48,19 +46,16 @@ public class TreeController {
 
 
     @PutMapping
-    public ResponseEntity<Object> update(@Valid @RequestBody TreeVm treeVm) {
+    public ResponseEntity<Object> update(@Valid @RequestBody TreeRequest treeRequest) {
 
-        if (treeVm.getId() == null) return ResponseUtil.notFound("Tree");
+        if (treeRequest.getId() == null) return ResponseUtil.notFound("Tree");
 
-        if (treeVm.getFieldId() == null || treeVm.getFieldId() <= 0)
+        if (treeRequest.getFieldId() == null || treeRequest.getFieldId() <= 0)
             return ResponseUtil.notFound("Tree: Field");
 
-        Tree tree = treeVmMapper.toTree(treeVm);
-        Field field = new Field();
-        field.setId(treeVm.getFieldId() );
-        tree.setField(field);
+        Tree tree = treeRequestMapper.toTree(treeRequest);
 
-        Tree updatedTree = treeService.save(tree);
+        Tree updatedTree = treeService.update(tree);
 
         if (updatedTree != null) {
             return ResponseUtil.updateSuccessfully("Tree", treeVmMapper.toTreeVm(updatedTree));
@@ -93,7 +88,7 @@ public class TreeController {
             @RequestParam(defaultValue = "10") int size) {
 
         Page<Tree> treePage = treeService.findAll(page, size);
-        List<TreeVm> trees = treePage.map(treeVmMapper::toTreeVm).getContent();
+        List<TreeResponse> trees = treePage.map(treeVmMapper::toTreeVm).getContent();
 
         return ResponseUtil.getSuccessfully("Trees", trees);
     }

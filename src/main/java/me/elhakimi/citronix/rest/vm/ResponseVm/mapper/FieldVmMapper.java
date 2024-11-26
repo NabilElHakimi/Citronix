@@ -1,9 +1,7 @@
-package me.elhakimi.citronix.rest.vm.mapper;
+package me.elhakimi.citronix.rest.vm.ResponseVm.mapper;
 
-import me.elhakimi.citronix.domain.Farm;
 import me.elhakimi.citronix.domain.Field;
-import me.elhakimi.citronix.rest.vm.FarmVm;
-import me.elhakimi.citronix.rest.vm.FieldVm;
+import me.elhakimi.citronix.rest.vm.ResponseVm.FieldVm;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

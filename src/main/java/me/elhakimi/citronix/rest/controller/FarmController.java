@@ -5,9 +5,10 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
-import me.elhakimi.citronix.rest.vm.FarmVm;
-import me.elhakimi.citronix.rest.vm.mapper.FarmVmMapper;
-import me.elhakimi.citronix.service.impl.FarmServiceImpl;
+import me.elhakimi.citronix.rest.vm.ResponseVm.FarmVm;
+import me.elhakimi.citronix.rest.vm.RequestVm.FarmRequest;
+import me.elhakimi.citronix.rest.vm.RequestVm.mapper.FarmRequestMapper;
+import me.elhakimi.citronix.rest.vm.ResponseVm.mapper.FarmVmMapper;
 import me.elhakimi.citronix.service.interfaces.FarmService;
 import me.elhakimi.citronix.util.ResponseUtil;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ public class FarmController {
 
     private final FarmService farmService;
     private final FarmVmMapper farmVmMapper;
+    private final FarmRequestMapper farmRequestMapper ;
 
 
 
@@ -37,11 +39,11 @@ public class FarmController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveFarm(@RequestBody @Valid FarmVm farmVm) {
+    public ResponseEntity<Object> saveFarm(@RequestBody @Valid FarmRequest farmRequest) {
 
-        if(farmVm.getId() != null) throw new mustBeNullException("Id");
+        if(farmRequest.getId() != null) throw new mustBeNullException("Id");
 //        if (!farmVm.getFields().isEmpty()) throw new mustBeNullException("Fields");
-        return ResponseEntity.ok(farmVmMapper.toFarmVm(farmService.save(farmVmMapper.toFarm(farmVm))));
+        return ResponseEntity.ok(farmVmMapper.toFarmVm(farmService.save(farmRequestMapper.toFarm(farmRequest))));
     }
 
     @PutMapping

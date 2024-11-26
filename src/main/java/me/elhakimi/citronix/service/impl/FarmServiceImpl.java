@@ -31,12 +31,13 @@ public class FarmServiceImpl  implements FarmService {
 
     public Farm save(Farm farm) {
 
-        double areaSum = farm.getFields().stream().mapToDouble(Field::getArea).sum();
-        if(areaSum > farm.getArea()) throw new DontHaveAreaException("Field");
-        farm.getFields().forEach(field -> field.setFarm(farm));
+
+        farm.setCreationDate(LocalDate.now());
+//        double areaSum = farm.getFields().stream().mapToDouble(Field::getArea).sum();
+//        if(areaSum > farm.getArea()) throw new DontHaveAreaException("Field");
+//        farm.getFields().forEach(field -> field.setFarm(farm));
         return farmRepository.save(farm);
     }
-
 
     public Farm findById(Long id) {
         return farmRepository.findById(id).orElse(null);
@@ -51,7 +52,8 @@ public class FarmServiceImpl  implements FarmService {
         return farmRepository.save(farm);
     }
 
-//   ---------------------- ------- ---- searchAllByNameOrAreaOrCreationDateOrId ------------------------------------------------------
+
+    //   --------------------------------- searchAllByNameOrAreaOrCreationDateOrId ------------------------------------------------------
 
     public List<Farm> searchAll(String name, Double area, String location, LocalDate creationDate, Long id) {
         return farmRepository.searchAllByCriteria(name, area, creationDate, id, location);
