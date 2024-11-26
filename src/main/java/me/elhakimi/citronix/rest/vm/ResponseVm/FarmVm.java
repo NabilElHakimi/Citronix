@@ -1,8 +1,7 @@
-package me.elhakimi.citronix.rest.vm;
+package me.elhakimi.citronix.rest.vm.ResponseVm;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.elhakimi.citronix.domain.Field;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

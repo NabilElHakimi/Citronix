@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import me.elhakimi.citronix.domain.Harvest;
-import me.elhakimi.citronix.rest.vm.HarvestVm;
+import me.elhakimi.citronix.rest.vm.RequestVm.HarvestRequest;
+import me.elhakimi.citronix.rest.vm.RequestVm.mapper.HarvestRequestMapper;
+import me.elhakimi.citronix.rest.vm.ResponseVm.HarvestVm;
 import me.elhakimi.citronix.rest.vm.ResponseVm.mapper.HarvestVmMapper;
 import me.elhakimi.citronix.service.interfaces.HarvestService;
 import me.elhakimi.citronix.util.ResponseUtil;
@@ -19,10 +21,11 @@ public class HarvestController {
 
         private final HarvestService harvestService;
         private final HarvestVmMapper harvestVmMapper;
+        private final HarvestRequestMapper harvestRequestMapper;
 
         @PostMapping
-        public ResponseEntity<Object> save(@RequestBody @Valid HarvestVm harvest) {
-           Harvest harvestToSave = harvestService.save(harvestVmMapper.toHarvest(harvest));
+        public ResponseEntity<Object> save(@RequestBody @Valid HarvestRequest harvestRequest) {
+           Harvest harvestToSave = harvestService.save(harvestRequestMapper.toHarvest(harvestRequest));
            if(harvestToSave == null) return ResponseUtil.saveFailed("Harvest");
 
            return ResponseUtil.saveSuccessfully("Harvest" , harvestVmMapper.toHarvestVm(harvestToSave));
@@ -30,11 +33,11 @@ public class HarvestController {
         }
 
         @PutMapping
-        public ResponseEntity<Object> update(@RequestBody HarvestVm harvest) {
+        public ResponseEntity<Object> update(@RequestBody HarvestRequest harvestRequest) {
 
-            if(harvest.getId() == null) return ResponseUtil.notFound("Harvest");
+            if(harvestRequest.getId() == null) return ResponseUtil.notFound("Harvest");
 
-            Harvest harvestToSave = harvestService.update(harvestVmMapper.toHarvest(harvest));
+            Harvest harvestToSave = harvestService.update(harvestRequestMapper.toHarvest(harvestRequest));
             if(harvestToSave == null) return ResponseUtil.notFound("Harvest");
 
             return ResponseUtil.updateSuccessfully("Harvest" , harvestVmMapper.toHarvestVm(harvestToSave));

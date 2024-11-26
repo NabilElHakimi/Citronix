@@ -1,10 +1,9 @@
-package me.elhakimi.citronix.rest.vm;
+package me.elhakimi.citronix.rest.vm.ResponseVm;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
-import me.elhakimi.citronix.rest.vm.ResponseVm.TreeResponse;
 
 import java.util.ArrayList;
 import java.util.List;

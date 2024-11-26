@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNotNullException;
 import me.elhakimi.citronix.rest.exception.exceptions.mustBeNullException;
-import me.elhakimi.citronix.rest.vm.FarmVm;
+import me.elhakimi.citronix.rest.vm.ResponseVm.FarmVm;
 import me.elhakimi.citronix.rest.vm.RequestVm.FarmRequest;
 import me.elhakimi.citronix.rest.vm.RequestVm.mapper.FarmRequestMapper;
 import me.elhakimi.citronix.rest.vm.ResponseVm.mapper.FarmVmMapper;

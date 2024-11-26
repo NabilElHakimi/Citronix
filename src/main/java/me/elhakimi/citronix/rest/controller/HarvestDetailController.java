@@ -5,7 +5,7 @@ package me.elhakimi.citronix.rest.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.HarvestDetail;
-import me.elhakimi.citronix.rest.vm.HarvestDetailVm;
+import me.elhakimi.citronix.rest.vm.ResponseVm.HarvestDetailVm;
 import me.elhakimi.citronix.rest.vm.ResponseVm.mapper.HarvestDetailVmMapper;
 import me.elhakimi.citronix.service.interfaces.HarvestDetailService;
 import me.elhakimi.citronix.util.ResponseUtil;

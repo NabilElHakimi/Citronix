@@ -5,7 +5,7 @@ package me.elhakimi.citronix.rest.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.domain.Field;
-import me.elhakimi.citronix.rest.vm.FieldVm;
+import me.elhakimi.citronix.rest.vm.ResponseVm.FieldVm;
 import me.elhakimi.citronix.rest.vm.ResponseVm.mapper.FieldVmMapper;
 import me.elhakimi.citronix.service.interfaces.FieldService;
 import me.elhakimi.citronix.util.ResponseUtil;

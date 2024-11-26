@@ -31,6 +31,8 @@ public class FarmServiceImpl  implements FarmService {
 
     public Farm save(Farm farm) {
 
+
+        farm.setCreationDate(LocalDate.now());
 //        double areaSum = farm.getFields().stream().mapToDouble(Field::getArea).sum();
 //        if(areaSum > farm.getArea()) throw new DontHaveAreaException("Field");
 //        farm.getFields().forEach(field -> field.setFarm(farm));
