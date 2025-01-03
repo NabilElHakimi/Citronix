@@ -13,7 +13,7 @@ public interface HarvestRequestMapper {
     @Mapping(source = "harvestDate", target = "harvestDate")
     @Mapping(source = "season", target = "season")
     @Mapping(source = "totalQuantity", target = "totalQuantity")
-    HarvestRequest toHarvestVm(Harvest harvest);
+    HarvestVm toHarvestVm(Harvest harvest);
 
     @Mapping(source = "id", target = "id")
     Harvest toHarvest(HarvestRequest harvestRequest);

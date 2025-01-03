@@ -2,7 +2,6 @@
 package me.elhakimi.citronix.rest.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-
 import me.elhakimi.citronix.domain.Harvest;
 import me.elhakimi.citronix.rest.vm.RequestVm.HarvestRequest;
 import me.elhakimi.citronix.rest.vm.RequestVm.mapper.HarvestRequestMapper;

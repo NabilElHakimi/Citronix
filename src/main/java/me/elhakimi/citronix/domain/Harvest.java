@@ -34,4 +34,5 @@ import java.util.List;
         @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL)
         private List<HarvestDetail> details = new ArrayList<>();
 
+
     }
