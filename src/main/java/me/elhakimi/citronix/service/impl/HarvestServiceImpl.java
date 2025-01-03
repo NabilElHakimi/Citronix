@@ -4,6 +4,7 @@ package me.elhakimi.citronix.service.impl;
 import lombok.AllArgsConstructor;
 import me.elhakimi.citronix.Repository.HarvestRepository;
 import me.elhakimi.citronix.domain.Harvest;
+import me.elhakimi.citronix.domain.HarvestDetail;
 import me.elhakimi.citronix.rest.exception.exceptions.NotFoundException;
 import me.elhakimi.citronix.rest.exception.exceptions.YouCanOnlyHarvestOncePerSeason;
 import me.elhakimi.citronix.service.interfaces.HarvestService;
@@ -19,7 +20,6 @@ import java.util.List;
 public class HarvestServiceImpl implements HarvestService {
 
     private final HarvestRepository harvestRepository;
-
 
     public Harvest save(Harvest harvest) {
 
@@ -50,7 +50,6 @@ public class HarvestServiceImpl implements HarvestService {
         return harvestRepository.save(harvest);
     }
 
-//
     public Page<Harvest> findAll(int page, int size) {
 
         page = page < 1 ? 0 : page - 1;
@@ -60,14 +59,19 @@ public class HarvestServiceImpl implements HarvestService {
 
     }
 
-
     public Harvest findById(Long id) {
-        return harvestRepository.findById(id).orElse(null);
+        Harvest harvest = harvestRepository.findById(id).orElse(null);
+        if(harvest != null) harvest.setTotalQuantity(quantityTotal(harvest));
+        return harvest ;
     }
-
 
     public void delete(Long id) {
         harvestRepository.deleteById(id);
+    }
+
+    private double quantityTotal(Harvest harvest) {
+        return harvest.getDetails().stream()
+                .mapToDouble(HarvestDetail::getQuantity).sum();
     }
 
 }
