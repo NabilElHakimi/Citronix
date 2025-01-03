@@ -51,6 +51,7 @@ pipeline{
             }
         }
     }
+
     post {
         success {
             mail to: 'hakimi.deve@gmail.com',
